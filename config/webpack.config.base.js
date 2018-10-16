@@ -10,6 +10,12 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const os = require("os");
+const HappyPack = require('happypack');
+const happyThreadPool = HappyPack.ThreadPool({
+  size: os.cpus().length
+});
 
 const devMode = process.env.NODE_ENV !== 'production'
 
@@ -30,48 +36,46 @@ module.exports = {
   module: {
     // loaders
     rules: [{
-      test: /\.(js)|(jsx)|(ts)|(tsx)/,
-      exclude: /node_modules/,
-      use: [{
-          loader: "babel-loader"
-        },
-        {
-          loader: "ts-loader",
-          options: {
-            transpileOnly: true
-          }
-        }
-      ]
-    }, {
-      test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-      loader: 'url-loader',
-      options: {
-        limit: 20480,
-        name: 'static/media/[name].[hash:8].[ext]',
-        fallback: "file-loader"
+        test: /\.(js)|(jsx)|(ts)|(tsx)/,
+        exclude: /node_modules/,
+        use: 'happypack/loader?id=jtsx',
       },
-    }, {
-      test: /\.(sa|sc|c)ss$/,
-      use: [
-        devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-        'css-loader',
-        'postcss-loader',
-        'sass-loader',
-      ],
-    }, {
-      test: /\.less$/,
-      use: [
-        devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-        "css-loader", // translates CSS into CommonJS
-        "less-loader" // compiles Less to CSS
-      ]
-    }, {
-      test: /\.css$/,
-      use: [
-        devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-        "css-loader", // translates CSS into CommonJS
-      ]
-    }]
+      {
+        test: /\.(sa|sc)ss/,
+        exclude: /node_modules/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+          'css-loader',
+          'postcss-loader',
+          'fast-sass-loader'
+        ],
+      },
+      {
+        test: /\.less/,
+        exclude: /node_modules/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+          "css-loader", // translates CSS into CommonJS
+          "less-loader" // compiles Less to CSS
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+          "css-loader", // translates CSS into CommonJS
+        ]
+      },
+      {
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        loader: 'url-loader',
+        options: {
+          limit: 4096,
+          name: 'static/media/[name].[hash:8].[ext]',
+          fallback: "file-loader"
+        },
+      },
+    ]
   },
 
   // how to resolve modules
@@ -81,7 +85,21 @@ module.exports = {
 
   // plugins
   plugins: [
-    new ForkTsCheckerWebpackPlugin(),
+    new HappyPack({
+      id: "jtsx",
+      threadPool: happyThreadPool,
+      loaders: [{
+        loader: "babel-loader"
+      }, {
+        loader: "ts-loader",
+        options: {
+          happyPackMode: true
+        }
+      }]
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      checkSyntacticErrors: true
+    }),
     new ForkTsCheckerNotifierWebpackPlugin({
       excludeWarnings: true,
       skipSuccessful: true
@@ -103,17 +121,23 @@ module.exports = {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "static/css/[name].css",
+      chunkFilename: "static/css/[id].css"
     })
   ],
 
   optimization: {
     minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: false // set to true if you want JS source maps
+      new ParallelUglifyPlugin({
+        cacheDir: '.cache/',
+        uglifyJS: {
+          output: {
+            comments: false, 
+          },
+          compress: {
+            warnings: false
+          }
+        }
       }),
       new OptimizeCSSAssetsPlugin({})
     ]

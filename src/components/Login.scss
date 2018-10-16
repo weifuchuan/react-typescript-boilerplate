@@ -1,0 +1,19 @@
+.container{
+  flex:1; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  background-color: #001529; 
+
+  .form{
+    background-color: #fff; 
+    border-radius: 0.5em; 
+    width: 20em; 
+    padding: 1em; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-around; 
+
+    
+  }
+}
