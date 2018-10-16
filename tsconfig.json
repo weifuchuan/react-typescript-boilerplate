@@ -11,14 +11,15 @@
     "jsx": "react",
     "moduleResolution": "node",
     // "rootDir": "src",
-    "strict": true,
-    "forceConsistentCasingInFileNames": false,
-    "noImplicitReturns": false,
-    "noImplicitThis": false,
-    "noImplicitAny": false,
-    "strictNullChecks": false,
-    "suppressImplicitAnyIndexErrors": false,
-    "noUnusedLocals": false
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": false,
+    "allowSyntheticDefaultImports": true, 
+    "noUnusedParameters": false
   },
   "exclude": [
     "node_modules",

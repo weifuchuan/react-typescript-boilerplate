@@ -23,9 +23,10 @@ const MiniCssExtractPluginLoader = {
 };
 
 module.exports = {
-  entry: {
-    main: resolveApp("src/index.tsx")
-  },
+  entry: [
+    require.resolve('./polyfills'),
+    resolveApp("src/index.tsx")
+  ],
   module: {
     // loaders
     rules: [{

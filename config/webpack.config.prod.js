@@ -10,7 +10,7 @@ module.exports = merge(baseConfig, {
     path: resolveApp('build'),
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-    publicPath: "/static/",
+    publicPath: "/",
     devtoolModuleFilenameTemplate: info =>
       path
       .relative(resolveApp('src'), info.absoluteResourcePath)

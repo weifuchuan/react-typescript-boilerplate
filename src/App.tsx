@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import './App.scss';
 import './App.less';
+import Counter from './components/Counter';
 
 @observer
 export default class App extends React.Component {
@@ -18,6 +19,9 @@ export default class App extends React.Component {
 					<button onClick={() => this.count--}>-</button>
 					<button onClick={() => this.count++}>+</button>
 				</div>
+				<Counter />
+				<Counter />
+				<Counter />
 			</div>
 		);
 	}
