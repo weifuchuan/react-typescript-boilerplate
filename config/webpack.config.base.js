@@ -89,6 +89,18 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html', // 配置输出文件名和路径
       template: resolveApp("public/index.html"), // 配置文件模板
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     }),
     new MiniCssExtractPlugin({
       filename: "[name].css",

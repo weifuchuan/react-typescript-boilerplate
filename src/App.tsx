@@ -11,7 +11,7 @@ const Counter = Loadable({
 });
 
 @observer
-export default class App extends React.Component {
+class App extends React.Component {
 	@observable count = 0;
 
 	render() {
@@ -21,8 +21,8 @@ export default class App extends React.Component {
 					<span>{this.count}</span>
 				</div>
 				<div className={'operations'}>
-					<button onClick={() => this.count--}>fuck</button>
-					<button onClick={() => this.count++}>add</button>
+					<button onClick={() => this.count--}>-</button>
+					<button onClick={() => this.count++}>+</button>
 				</div>
 				<Counter />
 				<Counter />
@@ -31,3 +31,7 @@ export default class App extends React.Component {
 		);
 	}
 }
+
+import { hot } from 'react-hot-loader'
+
+export default hot(module)(App); 

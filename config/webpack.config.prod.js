@@ -3,7 +3,8 @@ const baseConfig = require('./webpack.config.base');
 const path = require("path");
 const {
   resolveApp
-} = require('./kit')
+} = require('./kit') 
+ 
 
 module.exports = merge(baseConfig, {
   output: {
@@ -16,4 +17,5 @@ module.exports = merge(baseConfig, {
       .relative(resolveApp('src'), info.absoluteResourcePath)
       .replace(/\\/g, '/'),
   },
+ 
 })
