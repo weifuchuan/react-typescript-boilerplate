@@ -3,7 +3,12 @@ import { observer } from 'mobx-react';
 import { observable } from 'mobx';
 import './App.scss';
 import './App.less';
-import Counter from './components/Counter';
+import Loadable from 'react-loadable';
+
+const Counter = Loadable({
+	loader: () => import('./components/Counter'),
+	loading: () => <div>loading...</div>
+});
 
 @observer
 export default class App extends React.Component {
@@ -16,8 +21,8 @@ export default class App extends React.Component {
 					<span>{this.count}</span>
 				</div>
 				<div className={'operations'}>
-					<button onClick={() => this.count--}>-</button>
-					<button onClick={() => this.count++}>+</button>
+					<button onClick={() => this.count--}>fuck</button>
+					<button onClick={() => this.count++}>add</button>
 				</div>
 				<Counter />
 				<Counter />

@@ -6,8 +6,6 @@ const {
   resolveApp
 } = require("./kit")
 
-baseConfig.entry = ['webpack-hot-middleware/client', ...baseConfig.entry];
-
 module.exports = merge.smart(baseConfig, {
   output: {
     path: resolveApp("dist/"),
@@ -19,8 +17,7 @@ module.exports = merge.smart(baseConfig, {
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
 
-  plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
+  plugins: [ 
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],

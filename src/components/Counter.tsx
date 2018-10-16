@@ -11,6 +11,7 @@ export default class Counter extends React.Component {
 			<div>
 				<span>{this.cnt}</span>
 				<button onClick={() => this.cnt++}>+</button>
+        <button onClick={() => this.cnt--}>--</button>    
 			</div>
 		);
 	}
