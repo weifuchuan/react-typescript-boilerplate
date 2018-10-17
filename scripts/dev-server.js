@@ -3,6 +3,8 @@ const middleware = require('webpack-dev-middleware')
 const webpackOptions = require('../config/webpack.config.dev') // webpack 配置文件的路径
 const openBrowser = require('react-dev-utils/openBrowser');
 const qs = require("qs");
+const timeout = require('connect-timeout');
+const proxy = require('http-proxy-middleware');
 
 // 本地的开发环境默认使用 development mode
 webpackOptions.mode = 'development'
@@ -14,7 +16,7 @@ const webpackHotMiddlewareClient = {
   autoConnect: true
 };
 webpackOptions.entry = [
-  `webpack-hot-middleware/client?${qs.stringify(webpackHotMiddlewareClient)}`, 
+  `webpack-hot-middleware/client?${qs.stringify(webpackHotMiddlewareClient)}`,
   ...webpackOptions.entry
 ];
 
@@ -28,6 +30,18 @@ app.use(middleware(compiler, {
 }));
 
 app.use(require("webpack-hot-middleware")(compiler));
+
+app.use(timeout(30 * 1000));
+app.use((req, res, next) => {
+  if (!req.timedout) next();
+});
+
+// Proxy server 
+// app.use(proxy('/', {
+//   target: "http://localhost:80",
+//   changeOrigin: true,
+//   ws: true,
+// }))
 
 const port = 3000;
 
