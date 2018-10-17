@@ -7,6 +7,8 @@ const {
 } = require("./kit")
 
 module.exports = merge.smart(baseConfig, {
+  devtool: 'eval-source-map',
+
   output: {
     path: resolveApp("dist/"),
     pathinfo: true,
@@ -18,8 +20,8 @@ module.exports = merge.smart(baseConfig, {
   },
 
   plugins: [ 
-    // new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
 })

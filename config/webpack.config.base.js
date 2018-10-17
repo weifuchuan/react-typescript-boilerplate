@@ -5,9 +5,9 @@ const {
   postcssLoader
 } = require("./kit")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+// const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
@@ -21,14 +21,14 @@ const happyThreadPool = HappyPack.ThreadPool({
 
 const devMode = process.env.NODE_ENV !== 'production'
 
-const MiniCssExtractPluginLoader = {
-  loader: MiniCssExtractPlugin.loader,
-  options: {
-    // you can specify a publicPath here
-    // by default it use publicPath in webpackOptions.output
-    // publicPath: '../'
-  }
-};
+// const MiniCssExtractPluginLoader = {
+//   loader: MiniCssExtractPlugin.loader,
+//   options: {
+//     // you can specify a publicPath here
+//     // by default it use publicPath in webpackOptions.output
+//     // publicPath: '../'
+//   }
+// };
 
 module.exports = {
   entry: [
@@ -45,29 +45,49 @@ module.exports = {
       {
         test: /\.(sa|sc)ss/,
         exclude: /node_modules/,
-        use: [
-          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-          'css-loader',
-          'postcss-loader',
-          'fast-sass-loader'
-        ],
+        use: 'happypack/loader?id=scss',
       },
       {
         test: /\.less/,
         exclude: /node_modules/,
-        use: [
-          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-          "css-loader", // translates CSS into CommonJS
-          "less-loader" // compiles Less to CSS
-        ],
+        use: 'happypack/loader?id=less',
       },
       {
         test: /\.css$/,
-        use: [
-          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-          "css-loader", // translates CSS into CommonJS
-        ]
+        // exclude: /node_modules/,
+        use: 'happypack/loader?id=css',
       },
+      // {
+      //   test: /\.(sa|sc)ss/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+      //     'style-loader',
+      //     'css-loader',
+      //     'postcss-loader',
+      //     'fast-sass-loader'
+      //   ],
+      // },
+      // {
+      //   test: /\.less/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+      //     'style-loader',
+      //     "css-loader", // translates CSS into CommonJS
+      //     'postcss-loader',
+      //     "less-loader" // compiles Less to CSS
+      //   ],
+      // },
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+      //     'style-loader',
+      //     "css-loader", // translates CSS into CommonJS
+      //     'postcss-loader',
+      //   ]
+      // },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         loader: 'url-loader',
@@ -83,7 +103,7 @@ module.exports = {
   // how to resolve modules
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-    plugins: [new TsconfigPathsPlugin({/* options: see below */})]
+    plugins: [new TsconfigPathsPlugin({ /* options: see below */ })]
   },
 
   // plugins
@@ -96,9 +116,41 @@ module.exports = {
       }, {
         loader: "ts-loader",
         options: {
-          happyPackMode: true
+          happyPackMode: true,
+          compilerOptions:{
+            "sourceMap": devMode,
+          }
         }
       }]
+    }),
+    new HappyPack({
+      id: "scss",
+      threadPool: happyThreadPool,
+      loaders: [
+        'style-loader',
+        'css-loader',
+        postcssLoader,
+        'fast-sass-loader'
+      ]
+    }),
+    new HappyPack({
+      id: "less",
+      threadPool: happyThreadPool,
+      loaders: [
+        'style-loader',
+        'css-loader',
+        postcssLoader,
+        'less-loader'
+      ]
+    }),
+    new HappyPack({
+      id: "css",
+      threadPool: happyThreadPool,
+      loaders: [
+        'style-loader',
+        'css-loader',
+        // postcssLoader,
+      ]
     }),
     new ForkTsCheckerWebpackPlugin({
       checkSyntacticErrors: true
@@ -123,10 +175,10 @@ module.exports = {
         minifyURLs: true,
       },
     }),
-    new MiniCssExtractPlugin({
-      filename: "static/css/[name].css",
-      chunkFilename: "static/css/[id].css"
-    })
+    // new MiniCssExtractPlugin({
+    //   filename: "static/css/[name].css",
+    //   chunkFilename: "static/css/[id].css"
+    // })
   ],
 
   optimization: {
@@ -135,14 +187,14 @@ module.exports = {
         cacheDir: '.cache/',
         uglifyJS: {
           output: {
-            comments: false, 
+            comments: false,
           },
           compress: {
             warnings: false
           }
         }
       }),
-      new OptimizeCSSAssetsPlugin({})
+      // new OptimizeCSSAssetsPlugin({})
     ]
   },
 }
