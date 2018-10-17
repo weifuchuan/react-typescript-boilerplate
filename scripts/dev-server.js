@@ -8,11 +8,15 @@ const qs = require("qs");
 webpackOptions.mode = 'development'
 // https://github.com/webpack-contrib/webpack-hot-middleware#client
 const webpackHotMiddlewareClient = {
+  path: "/__webpack_hmr",
   timeout: 2000,
   reload: true,
   autoConnect: true
 };
-webpackOptions.entry = [`webpack-hot-middleware/client?${qs.stringify(webpackHotMiddlewareClient)}`, ...webpackOptions.entry];
+webpackOptions.entry = [
+  `webpack-hot-middleware/client?${qs.stringify(webpackHotMiddlewareClient)}`, 
+  ...webpackOptions.entry
+];
 
 const compiler = webpack(webpackOptions)
 const express = require('express')
@@ -24,7 +28,7 @@ app.use(middleware(compiler, {
 }));
 
 app.use(require("webpack-hot-middleware")(compiler));
- 
+
 const port = 3000;
 
 app.listen(port, () => {

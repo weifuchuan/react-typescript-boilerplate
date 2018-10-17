@@ -18,7 +18,8 @@ module.exports = merge.smart(baseConfig, {
   },
 
   plugins: [ 
+    // new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    // new webpack.NoEmitOnErrorsPlugin()
   ],
 })

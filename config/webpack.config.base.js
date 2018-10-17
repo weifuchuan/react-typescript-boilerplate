@@ -12,6 +12,8 @@ const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-web
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const os = require("os");
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
@@ -80,7 +82,8 @@ module.exports = {
 
   // how to resolve modules
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    plugins: [new TsconfigPathsPlugin({/* options: see below */})]
   },
 
   // plugins

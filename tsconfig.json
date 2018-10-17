@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "paths": {
+      "@/*":["src/*"]
+    },
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom", "es2015"],
     "sourceMap": true,
     "allowJs": true,
     "experimentalDecorators": true,
