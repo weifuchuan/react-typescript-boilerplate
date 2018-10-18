@@ -4,8 +4,13 @@ const path = require("path");
 const webpack = require("webpack");
 const {
   resolveApp
-} = require("./kit")
+} = require("./kit");
+// @ts-ignore
+const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
+baseConfig.entry.unshift(require.resolve('react-dev-utils/webpackHotDevClient')); 
+
+// @ts-ignore
 module.exports = merge.smart(baseConfig, {
   devtool: 'eval-source-map',
 
@@ -15,13 +20,17 @@ module.exports = merge.smart(baseConfig, {
     filename: 'static/js/bundle.js',
     chunkFilename: 'static/js/[name].chunk.js',
     publicPath: "/",
+    // @ts-ignore
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
 
-  plugins: [ 
-    new webpack.optimize.OccurrenceOrderPlugin(),
+  plugins: [  
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new WatchMissingNodeModulesPlugin(resolveApp("node_modules")), 
   ],
+
+  performance: {
+    hints: false
+  }
 })

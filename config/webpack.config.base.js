@@ -4,16 +4,20 @@ const {
   resolveApp,
   postcssLoader
 } = require("./kit")
+// @ts-ignore
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 // const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+// @ts-ignore
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// @ts-ignore
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const os = require("os");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
+// @ts-ignore
 const HappyPack = require('happypack');
 const happyThreadPool = HappyPack.ThreadPool({
   size: os.cpus().length
@@ -31,6 +35,7 @@ const devMode = process.env.NODE_ENV !== 'production'
 // };
 
 module.exports = {
+  mode: devMode ? 'development' : 'production',
   entry: [
     require.resolve('./polyfills'),
     resolveApp("src/index.tsx")
@@ -103,6 +108,7 @@ module.exports = {
   // how to resolve modules
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    // @ts-ignore
     plugins: [new TsconfigPathsPlugin({ /* options: see below */ })]
   },
 
@@ -117,7 +123,7 @@ module.exports = {
         loader: "ts-loader",
         options: {
           happyPackMode: true,
-          compilerOptions:{
+          compilerOptions: {
             "sourceMap": devMode,
           }
         }
@@ -153,7 +159,8 @@ module.exports = {
       ]
     }),
     new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true
+      checkSyntacticErrors: true,
+      watch: resolveApp("src"),
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
       excludeWarnings: true,
