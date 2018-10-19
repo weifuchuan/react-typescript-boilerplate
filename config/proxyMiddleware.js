@@ -7,4 +7,4 @@ module.exports = proxy('/api/', {
   pathRewrite: function (path, req) {
     return path.substring(4); 
   }
-}); 
+});

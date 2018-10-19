@@ -12,6 +12,7 @@ baseConfig.entry.unshift(require.resolve('react-dev-utils/webpackHotDevClient'))
 
 // @ts-ignore
 module.exports = merge.smart(baseConfig, {
+  mode: 'development',
   devtool: 'eval-source-map',
 
   output: {

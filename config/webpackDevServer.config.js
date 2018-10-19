@@ -39,7 +39,7 @@ module.exports = function(proxy, allowedHost) {
     before(app) { 
       app.use(errorOverlayMiddleware()); 
       app.use(noopServiceWorkerMiddleware()); 
-    }    ,
+    },
     // @ts-ignore
     after: function(app) {
       app.use(proxyMiddleware); 

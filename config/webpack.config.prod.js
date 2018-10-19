@@ -8,6 +8,9 @@ const process = require("process");
 
 // @ts-ignore
 module.exports = merge(baseConfig, {
+  mode: 'production',
+  devtool: false,
+
   output: {
     path: resolveApp('build'),
     filename: 'static/js/[name].[chunkhash:8].js',
@@ -18,5 +21,10 @@ module.exports = merge(baseConfig, {
       path
       .relative(resolveApp('src'), info.absoluteResourcePath)
       .replace(/\\/g, '/'),
+  },
+  
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM'
   },
 })
