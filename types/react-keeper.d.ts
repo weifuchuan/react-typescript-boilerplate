@@ -33,7 +33,7 @@ export interface LinkProps {
 	className?: string;
 	activeClassName?: string;
 	activeStyle?: React.CSSProperties;
-	children?: JSX.Element;
+	children?: React.ReactNode;
 	isActive?: boolean;
 }
 

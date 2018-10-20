@@ -6,7 +6,7 @@ import { observer, inject } from 'mobx-react';
 import { Store } from '@/store';
 
 interface Props {
-  store?: Store; 
+  store: Store; 
 }
 
 @inject("store")
