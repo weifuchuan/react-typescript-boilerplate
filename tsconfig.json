@@ -2,15 +2,16 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+			"*": ["types/*"],
       "@/*": ["src/*"]
     },
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom"],
+    "lib": ["es6", "dom", "es2015"],
     "sourceMap": true,
     "allowJs": true,
-    "checkJs": true,
+    "checkJs":true,
     "experimentalDecorators": true,
     "jsx": "react",
     "moduleResolution": "node",
@@ -21,9 +22,9 @@
     "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,
     "noUnusedParameters": false,
-    "downlevelIteration": true,
-    "allowUnreachableCode": true,
-    "locale": "zh-CN"
+    "downlevelIteration":true,
+    "allowUnreachableCode":true,
+    "locale":"zh-CN" 
   },
   "exclude": [
     "node_modules",
