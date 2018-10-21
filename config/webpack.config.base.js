@@ -4,6 +4,7 @@ const {
   resolveApp,
   postcssLoader
 } = require("./kit")
+const webpack = require("webpack")
 // @ts-ignore
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 // @ts-ignore
@@ -127,7 +128,10 @@ module.exports = {
   },
 
   // plugins
-  plugins: [
+  plugins: [    
+    new webpack.DefinePlugin({ 
+      __DEV__: JSON.stringify(devMode),
+    }),
     ...(devMode ? [] : [
       new HappyPack({
         id: "jtsx",

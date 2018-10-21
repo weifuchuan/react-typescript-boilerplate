@@ -1,9 +1,7 @@
 import React from 'react';
 import "./index.scss"; 
 import { observer } from 'mobx-react';
-import { Store } from '@/store'; 
-import Counter from '@/components/Counter';
-import { Control } from 'react-keeper';
+import { Store } from '@/store';  
 
 interface Props {
   store?: Store; 
@@ -14,8 +12,7 @@ export default  class Home extends React.Component<Props> {
   render(){
     return (
       <div className="HomeContainer" >
-        Home <Counter/>
-        <button onClick={()=>{Control.go("/second")}}>to second</button>
+        Home 
       </div>
     )
   }

@@ -10,10 +10,6 @@ class App extends React.Component {
 			<Router>
 				<div className={'container'}>
 					<Route path={'/>'} loadComponent={(cb) => import('@/pages/Home').then((C) => cb(C.default))} />
-					<Route
-						path={'/second'}
-						loadComponent={(cb) => import('@/pages/Second').then((C) => cb(C.default))}
-					/>
 				</div>
 			</Router>
 		);

@@ -27,6 +27,7 @@ module.exports = merge.smart(baseConfig, {
   },
 
   plugins: [  
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new WatchMissingNodeModulesPlugin(resolveApp("node_modules")), 
   ],
