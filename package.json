@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=development node ./scripts/dev-server.js",
     "build": "node ./scripts/prebuild.js && cross-env NODE_ENV=production PUBLIC_PATH=\"./\" webpack --mode production --config ./config/webpack.config.prod.js --colors",
     "test": "jest",
-    "add-page": "node ./scripts/add-page.js"
+    "add-page": "node ./scripts/add-page.js",
+    "add-comp": "node ./scripts/add-comp.js"
   },
   "dependencies": {
     "antd": "3.8",
