@@ -21,10 +21,5 @@ module.exports = merge(baseConfig, {
       path
       .relative(resolveApp('src'), info.absoluteResourcePath)
       .replace(/\\/g, '/'),
-  },
-  
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM'
-  },
+  }, 
 })

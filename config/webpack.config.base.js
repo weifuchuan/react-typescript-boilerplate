@@ -22,7 +22,7 @@ const os = require("os");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const path = require("path");
 
-const devMode = process.env.NODE_ENV !== 'production'
+const devMode = process.env.NODE_ENV !== 'production'; 
 
 // @ts-ignore
 const HappyPack = require('happypack');

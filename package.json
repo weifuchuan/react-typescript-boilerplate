@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node ./scripts/dev-server.js",
+    "start": "cross-env NODE_ENV=development PORT=3000 node ./scripts/dev-server.js",
     "build": "node ./scripts/prebuild.js && cross-env NODE_ENV=production PUBLIC_PATH=\"/\" webpack --mode production --config ./config/webpack.config.prod.js --colors",
     "test": "jest",
     "add-page": "node ./scripts/add-page.js",
