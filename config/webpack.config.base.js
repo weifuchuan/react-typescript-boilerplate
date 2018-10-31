@@ -1,8 +1,7 @@
 "strict";
 
 const {
-  resolveApp,
-  postcssLoader
+  resolveApp, 
 } = require("./kit")
 const webpack = require("webpack")
 // @ts-ignore
@@ -20,9 +19,10 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 const os = require("os");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+// @ts-ignore
 const path = require("path");
 
-const devMode = process.env.NODE_ENV !== 'production'; 
+const devMode = process.env.NODE_ENV !== 'production';
 
 // @ts-ignore
 const HappyPack = require('happypack');
@@ -38,6 +38,51 @@ const MiniCssExtractPluginLoader = {
     // publicPath: '../'
   }
 };
+
+// @ts-ignore
+const autoprefixer = require('autoprefixer')({
+  browsers: [
+    '>1%',
+    'last 4 versions',
+    'Firefox ESR',
+    'not ie < 9', // React doesn't support IE8 anyway
+  ],
+  flexbox: 'no-2009',
+}); 
+// @ts-ignore
+const flexBugFixes = require('postcss-flexbugs-fixes')();
+
+const postcssLoader = {
+  loader: require.resolve('postcss-loader'),
+  options: { 
+    sourceMap: devMode,
+    plugins: () => [
+      flexBugFixes,
+      autoprefixer
+    ],
+  },
+}; 
+
+const cssLoader = {
+  loader: "css-loader",
+  options: {
+    sourceMap: devMode
+  }
+};
+
+const lessLoader = {
+  loader: "less-loader",
+  options: {
+    sourceMap: devMode
+  }
+};
+
+const scssLoader = devMode ? {
+  loader: "sass-loader",
+  options: {
+    sourceMap: devMode
+  }
+} : "fast-sass-loader";
 
 module.exports = {
   entry: [
@@ -65,22 +110,20 @@ module.exports = {
           test: /\.(sa|sc)ss/,
           exclude: /node_modules/,
           use: [
-            // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
             'style-loader',
-            'css-loader',
-            'postcss-loader',
-            'fast-sass-loader'
+            cssLoader,
+            postcssLoader,
+            scssLoader
           ],
         },
         {
           test: /\.less/,
           exclude: /node_modules/,
           use: [
-            // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
             'style-loader',
-            "css-loader", // translates CSS into CommonJS
-            'postcss-loader',
-            "less-loader" // compiles Less to CSS
+            cssLoader,
+            postcssLoader,
+            lessLoader
           ],
         },
       ] : [{
@@ -103,9 +146,8 @@ module.exports = {
         test: /\.css$/,
         use: [
           devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-          // 'style-loader',
-          "css-loader", // translates CSS into CommonJS
-          'postcss-loader',
+          cssLoader,
+          postcssLoader,
         ]
       },
       {
@@ -128,8 +170,8 @@ module.exports = {
   },
 
   // plugins
-  plugins: [    
-    new webpack.DefinePlugin({ 
+  plugins: [
+    new webpack.DefinePlugin({
       __DEV__: JSON.stringify(devMode),
     }),
     ...(devMode ? [] : [
@@ -153,9 +195,9 @@ module.exports = {
         threadPool: happyThreadPool,
         loaders: [
           'style-loader',
-          'css-loader',
+          cssLoader,
           postcssLoader,
-          'fast-sass-loader'
+          scssLoader
         ]
       }),
       new HappyPack({
@@ -163,12 +205,12 @@ module.exports = {
         threadPool: happyThreadPool,
         loaders: [
           'style-loader',
-          'css-loader',
+          cssLoader,
           postcssLoader,
-          'less-loader'
+          lessLoader
         ]
       })
-    ]), 
+    ]),
     new ForkTsCheckerWebpackPlugin({
       checkSyntacticErrors: true,
       watch: resolveApp("src"),
