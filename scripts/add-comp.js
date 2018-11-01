@@ -14,6 +14,7 @@ for (let name of names) {
   const ps = compBuild(name);
 
   try {
+    fs.mkdirSync(resolveApp(`src/components`));
     fs.mkdirSync(resolveApp(`src/components/${name}`));
     fs.writeFileSync(resolveApp(`src/components/${name}/index.tsx`), ps);
     fs.writeFileSync(resolveApp(`src/components/${name}/index.scss`), `.${name}Container{

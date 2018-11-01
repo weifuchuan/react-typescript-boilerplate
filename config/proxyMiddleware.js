@@ -1,5 +1,8 @@
 const proxy = require('http-proxy-middleware');
 
+module.exports = undefined; 
+
+/*
 module.exports = proxy('/api/', {
   target: "http://localhost:80",
   changeOrigin: true,
@@ -8,3 +11,4 @@ module.exports = proxy('/api/', {
     return path.substring(4); // trim left /api
   }
 });
+*/

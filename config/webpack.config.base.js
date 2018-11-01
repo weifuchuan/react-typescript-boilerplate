@@ -66,7 +66,8 @@ const postcssLoader = {
 const cssLoader = {
   loader: "css-loader",
   options: {
-    sourceMap: devMode
+    sourceMap: devMode,
+    localIdentName: '[local]__[path][name]--[hash:base64:5]'
   }
 };
 
