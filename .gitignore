@@ -19,3 +19,8 @@ yarn-debug.log*
 yarn-error.log*
 
 /.cache
+/.vscode
+/.idea
+
+*.lock
+
