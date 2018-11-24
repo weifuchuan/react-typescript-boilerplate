@@ -1,11 +1,10 @@
-// @ts-nocheck
-const path = require('path');
-const fs = require("fs"); 
+// @flow
+import path from 'path'
+import fs from 'fs'
 
 const appDirectory = fs.realpathSync(process.cwd());
-const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
- 
+const resolveApp = (relativePath: string) => path.resolve(appDirectory, relativePath);
 
-module.exports = {
+export {
   resolveApp, 
 }

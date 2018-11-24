@@ -1,9 +1,10 @@
-const proxy = require('http-proxy-middleware');
+// @flow
+import proxy from 'http-proxy-middleware'
 
-module.exports = undefined; 
+export default undefined; 
 
 /*
-module.exports = proxy('/api/', {
+export default proxy('/api/', {
   target: "http://localhost:80",
   changeOrigin: true,
   ws: true,

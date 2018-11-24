@@ -10,12 +10,11 @@
     "target": "es5",
     "lib": ["es6", "dom", "es2015"],
     "sourceMap": true,
-    "allowJs": true,
-    "checkJs": true,
+    "allowJs": false,
+    "checkJs": false,
     "experimentalDecorators": true,
     "jsx": "react",
-    "moduleResolution": "node",
-    // "rootDir": "src",
+    "moduleResolution": "node", 
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
@@ -24,11 +23,13 @@
     "noUnusedParameters": false,
     "downlevelIteration": true,
     "allowUnreachableCode": true,
+    "skipLibCheck": true,
     "locale": "zh-CN"
   },
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "flow-typed"
   ],
   "module": "ESNext"
 }

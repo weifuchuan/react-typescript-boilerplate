@@ -1,4 +1,3 @@
-// @ts-nocheck
 'use strict';
 
 if (typeof Promise === 'undefined') { 

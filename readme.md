@@ -1,6 +1,6 @@
-# React + Mobx + TypeScript 脚手架
+# React + TypeScript + Flow 脚手架
 
-## For windows (for to build node-sass)
+## To build node-sass for windows
 
 ```
 npm install --global --production windows-build-tools

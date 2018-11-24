@@ -1,13 +1,16 @@
-const merge = require('webpack-merge');
-const baseConfig = require('./webpack.config.base');
-const path = require("path");
-const {
+// @flow
+import merge from 'webpack-merge'
+import baseConfig from './webpack.config.base'
+import path from "path"
+import {
   resolveApp
-} = require('./kit')
-const process = require("process");
+} from './kit'
+import process from "process"
+import type {
+  WebpackOptions
+} from 'webpack'
 
-// @ts-ignore
-module.exports = merge(baseConfig, {
+export default merge(baseConfig, ({
   mode: 'production',
   devtool: false,
 
@@ -16,10 +19,10 @@ module.exports = merge(baseConfig, {
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     publicPath: process.env.PUBLIC_PATH ? process.env.PUBLIC_PATH : "/",
-    // @ts-ignore
+
     devtoolModuleFilenameTemplate: info =>
       path
       .relative(resolveApp('src'), info.absoluteResourcePath)
       .replace(/\\/g, '/'),
-  }, 
-})
+  },
+}: WebpackOptions))

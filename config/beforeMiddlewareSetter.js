@@ -1,7 +1,12 @@
-// @ts-nocheck 
- 
-module.exports = function (app) {
-  app.get("/login", (req, resp)=>{
-    resp.end("login"); 
-  });
+// @flow
+import type {
+	$Application,
+	$Request,
+	$Response
+} from 'express'
+
+export default function (app: $Application) {
+	app.get("/login", (req: $Request, resp: $Response) => {
+		resp.end("login");
+	});
 }
