@@ -15,5 +15,5 @@ webpack(config as any, (err, stats) => {
 	if (err || stats.hasErrors()) {
 		console.error(err);
 	}
-	console.info(stats.toString('normal'));
+	console.log(stats.toString('normal'));
 });

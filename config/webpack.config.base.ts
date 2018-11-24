@@ -2,10 +2,9 @@ import { resolveApp } from './kit';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+const TerserPlugin = require('terser-webpack-plugin');
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'; 
 import os from 'os';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 const HappyPack = require('happypack');
@@ -233,19 +232,6 @@ export default {
 	],
 
 	optimization: {
-		minimizer: [
-			new ParallelUglifyPlugin({
-				cacheDir: '.cache/',
-				uglifyJS: {
-					output: {
-						comments: false
-					},
-					compress: {
-						warnings: false
-					}
-				}
-			}),
-			new OptimizeCSSAssetsPlugin({})
-		]
-	}
+    minimizer: [new TerserPlugin()]
+  }
 } as webpack.Configuration;
