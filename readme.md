@@ -1,4 +1,4 @@
-# React + TypeScript + Flow 脚手架
+# React + TypeScript 脚手架
 
 ## To build node-sass for windows
 
