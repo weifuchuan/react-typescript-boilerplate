@@ -14,7 +14,7 @@ const HappyPack = require('happypack');
 const devMode: boolean = process.env.NODE_ENV !== 'production';
 
 const happyThreadPool: any = HappyPack.ThreadPool({
-	size: devMode ? 1 : os.cpus().length
+	size: os.cpus().length * 2
 });
 
 const MiniCssExtractPluginLoader = {
@@ -241,19 +241,20 @@ function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
 			chunks: [ p.name ],
 			filename: `${p.filename ? p.filename : p.name}.html`, // 配置输出文件名和路径
 			template: resolveApp(`public/${p.template ? p.template : 'index'}.html`), // 配置文件模板
-			inject: true
-			// minify: {
-			// 	removeComments: true,
-			// 	collapseWhitespace: true,
-			// 	removeRedundantAttributes: true,
-			// 	useShortDoctype: true,
-			// 	removeEmptyAttributes: true,
-			// 	removeStyleLinkTypeAttributes: true,
-			// 	keepClosingSlash: true,
-			// 	minifyJS: true,
-			// 	minifyCSS: true,
-			// 	minifyURLs: true
-			// }
+			title: p.title ? p.title : p.name,
+			inject: true,
+			minify: {
+				removeComments: true,
+				collapseWhitespace: true,
+				removeRedundantAttributes: true,
+				useShortDoctype: true,
+				removeEmptyAttributes: true,
+				removeStyleLinkTypeAttributes: true,
+				keepClosingSlash: true,
+				minifyJS: true,
+				minifyCSS: true,
+				minifyURLs: true
+			}
 		});
 	});
 }
