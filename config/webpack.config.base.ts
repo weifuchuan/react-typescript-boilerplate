@@ -19,9 +19,6 @@ const happyThreadPool: any = HappyPack.ThreadPool({
 const MiniCssExtractPluginLoader = {
 	loader: MiniCssExtractPlugin.loader,
 	options: {
-		// you can specify a publicPath here
-		// by default it use publicPath in webpackOptions.output
-		// publicPath: '../'
 	}
 };
 
@@ -77,7 +74,7 @@ export default {
 			...(devMode
 				? [
 						{
-							test: /\.(js)|(jsx)/,
+							test: /\.(js)|(jsx)|(mjs)/,
 							exclude: /node_modules/,
 							use: [
 								{
@@ -116,7 +113,7 @@ export default {
 					]
 				: [
 						{
-							test: /\.(js)|(jsx)/,
+							test: /\.(js)|(jsx)|(mjs)/,
 							exclude: /node_modules/,
 							use: 'happypack/loader?id=jsx'
 						},

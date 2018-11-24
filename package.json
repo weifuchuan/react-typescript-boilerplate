@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "cross-env NODE_ENV=development PORT=3000 node -r babel-register-ts ./scripts/dev-server.ts",
-    "build": "node -r babel-register-ts ./scripts/prebuild.js && cross-env NODE_ENV=production PUBLIC_PATH=\"/\" webpack --mode production --config ./config/webpack.config.prod.babel.js --colors",
+    "build": "cross-env NODE_ENV=production PUBLIC_PATH=\"./\" node -r babel-register-ts ./scripts/build.ts",
     "test": "jest",
     "flow": "flow",
     "flow-status": "flow status",

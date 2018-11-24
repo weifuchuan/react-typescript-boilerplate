@@ -4,7 +4,7 @@ import path from 'path';
 import { resolveApp } from './kit';
 import process from 'process';
 
-module.exports = merge(baseConfig as any, {
+export default  merge(baseConfig as any, {
 	mode: 'production',
 	devtool: false,
 
