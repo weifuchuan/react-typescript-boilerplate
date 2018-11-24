@@ -1,11 +1,6 @@
 {
   "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-flow", "@babel/preset-typescript"],
   "plugins": [
-    ["import", {
-      "libraryName": "antd",
-      "libraryDirectory": "es",
-      "style": "css"
-    }],
     ["@babel/plugin-proposal-decorators", {
       "legacy": true
     }],
@@ -18,6 +13,13 @@
       "alias": {
         "@": "./src"
       }
+    }],
+    "@babel/plugin-proposal-pipeline-operator",
+    
+    ["import", {
+      "libraryName": "antd",
+      "libraryDirectory": "es",
+      "style": "css"
     }]
   ]
 }
