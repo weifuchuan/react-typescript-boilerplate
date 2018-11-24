@@ -1,4 +1,3 @@
-// @flow
 import proxy from 'http-proxy-middleware'
 
 export default undefined; 
