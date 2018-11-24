@@ -5,7 +5,7 @@ import { Store } from '@/store';
 import FullScreenLoading from '@/components/FullScreenLoading';
 import { observable } from 'mobx';
 
-const ShowWindowWidth = require('@/components/ShowWindowWidth');
+const ShowWindowWidth = require('@/components/ShowWindowWidth').default;
 
 interface Props {
 	store: Store;
