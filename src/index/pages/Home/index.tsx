@@ -1,9 +1,9 @@
 import React from 'react';
 import './index.scss';
 import { observer, inject } from 'mobx-react';
-import { Store } from '@/store';
-import FullScreenLoading from '@/components/FullScreenLoading';
+import { Store } from '@/index/store'; 
 import { observable } from 'mobx';
+import FullScreenLoading from '@/components/FullScreenLoading';
 
 const ShowWindowWidth = require('@/components/ShowWindowWidth').default;
 
@@ -19,16 +19,9 @@ export default class Home extends React.Component<Props> {
 	render() {
 		return (
 			<div className="HomeContainer">
-				<FullScreenLoading loading={this.loading} />
-				<button
-					onClick={() => {
-						this.loading = !this.loading;
-					}}
-					style={{ zIndex: 1 }}
-				>
-					click
-				</button>
+				<h1>Index page</h1>
 				<ShowWindowWidth />
+				<FullScreenLoading loading={true}/>
 			</div>
 		);
 	}

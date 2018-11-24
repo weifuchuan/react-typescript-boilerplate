@@ -4,9 +4,11 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 const TerserPlugin = require('terser-webpack-plugin');
 const ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'; 
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import os from 'os';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import fs from 'fs-extra';
+import pagesConfig from '../src/pages-config';
 const HappyPack = require('happypack');
 
 const devMode: boolean = process.env.NODE_ENV !== 'production';
@@ -17,8 +19,7 @@ const happyThreadPool: any = HappyPack.ThreadPool({
 
 const MiniCssExtractPluginLoader = {
 	loader: MiniCssExtractPlugin.loader,
-	options: {
-	}
+	options: {}
 };
 
 const autoprefixer = require('autoprefixer')({
@@ -65,8 +66,21 @@ const scssLoader = devMode
 		}
 	: 'fast-sass-loader';
 
+function entryBuild(): webpack.Entry {
+	const entry: webpack.Entry = {};
+	for (let name of pagesConfig.map((p) => p.name)) {
+		const indexFile = resolveApp(`src/${name}/index.tsx`);
+		if (fs.existsSync(indexFile)) {
+			entry[name] = [ require.resolve('./polyfills'), indexFile ];
+		} else {
+			console.error(`${name} doesn't exsits! `);
+		}
+	}
+	return entry;
+}
+
 export default {
-	entry: [ require.resolve('./polyfills'), resolveApp('src/index.tsx') ],
+	entry: entryBuild(),
 	module: {
 		// loaders
 		rules: [
@@ -209,22 +223,7 @@ export default {
 			excludeWarnings: true,
 			skipSuccessful: true
 		}),
-		new HtmlWebpackPlugin({
-			filename: 'index.html', // 配置输出文件名和路径
-			template: resolveApp('public/index.html'), // 配置文件模板
-			minify: {
-				removeComments: true,
-				collapseWhitespace: true,
-				removeRedundantAttributes: true,
-				useShortDoctype: true,
-				removeEmptyAttributes: true,
-				removeStyleLinkTypeAttributes: true,
-				keepClosingSlash: true,
-				minifyJS: true,
-				minifyCSS: true,
-				minifyURLs: true
-			}
-		}),
+		...htmlWebpackPluginBuild(),
 		new MiniCssExtractPlugin({
 			filename: 'static/css/[name]-[hash].css',
 			chunkFilename: 'static/css/[id]-[hash].css'
@@ -232,6 +231,29 @@ export default {
 	],
 
 	optimization: {
-    minimizer: [new TerserPlugin()]
-  }
+		minimizer: [ new TerserPlugin() ]
+	}
 } as webpack.Configuration;
+
+function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
+	return pagesConfig.map((p) => {
+		return new HtmlWebpackPlugin({
+			chunks: [ p.name ],
+			filename: `${p.filename ? p.filename : p.name}.html`, // 配置输出文件名和路径
+			template: resolveApp(`public/${p.template ? p.template : 'index'}.html`), // 配置文件模板
+			inject: true
+			// minify: {
+			// 	removeComments: true,
+			// 	collapseWhitespace: true,
+			// 	removeRedundantAttributes: true,
+			// 	useShortDoctype: true,
+			// 	removeEmptyAttributes: true,
+			// 	removeStyleLinkTypeAttributes: true,
+			// 	keepClosingSlash: true,
+			// 	minifyJS: true,
+			// 	minifyCSS: true,
+			// 	minifyURLs: true
+			// }
+		});
+	});
+}

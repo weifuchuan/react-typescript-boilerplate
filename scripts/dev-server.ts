@@ -3,11 +3,12 @@ import fs from 'fs';
 import chalk from 'chalk';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-const clearConsole = require('react-dev-utils/clearConsole')
-const { choosePort, createCompiler, prepareProxy, prepareUrls }  = require('react-dev-utils/WebpackDevServerUtils');
-const openBrowser =require('react-dev-utils/openBrowser');
-const config =require('../config/webpack.config.dev.babel');
-const createDevServerConfig =require('../config/webpackDevServer.config.babel');
+import pagesConfig from '../src/pages-config';
+const clearConsole = require('react-dev-utils/clearConsole');
+const { choosePort, createCompiler, prepareProxy, prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
+const openBrowser = require('react-dev-utils/openBrowser');
+const config = require('../config/webpack.config.dev.babel');
+const createDevServerConfig = require('../config/webpackDevServer.config.babel');
 import { resolveApp } from '../config/kit';
 
 process.env.BABEL_ENV = 'development';
@@ -63,7 +64,7 @@ choosePort(HOST, DEFAULT_PORT)
 			}
 
 			console.log(chalk.cyan('Starting the development server...\n'));
-			openBrowser(urls.localUrlForBrowser);
+			openBrowser(urls.localUrlForBrowser + pagesConfig[0].name + '.html');
 		});
 
 		[ 'SIGINT', 'SIGTERM' ].forEach(function(sig) {

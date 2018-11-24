@@ -1,11 +1,14 @@
 import merge from 'webpack-merge';
-import  baseConfig from './webpack.config.base';
+import baseConfig from './webpack.config.base';
 import path from 'path';
 import webpack from 'webpack';
 import { resolveApp } from './kit';
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 
-(baseConfig.entry as string[]).unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
+const entry: any = baseConfig.entry;
+for (let name in entry) {
+	entry[name].unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
+}
 
 module.exports = merge.smart(baseConfig as any, {
 	mode: 'development',
@@ -14,7 +17,7 @@ module.exports = merge.smart(baseConfig as any, {
 	output: {
 		path: resolveApp('dist/'),
 		pathinfo: true,
-		filename: 'static/js/bundle.js',
+		filename: 'static/js/[name]/bundle.js',
 		chunkFilename: 'static/js/[name].chunk.js',
 		publicPath: '/',
 

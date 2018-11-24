@@ -9,7 +9,7 @@ class App extends React.Component {
 		return (
 			<Router>
 				<div className={'container'}>
-					<Route path={'/>'} loadComponent={(cb) => import('@/pages/Home').then((C) => cb(C.default))} />
+					<Route path={'/>'} loadComponent={(cb) => import('@/index/pages/Home').then((C) => cb(C.default))} />
 				</div>
 			</Router>
 		);
