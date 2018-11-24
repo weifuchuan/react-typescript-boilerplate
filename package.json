@@ -10,9 +10,7 @@
     "flow": "flow",
     "flow-status": "flow status",
     "flow-stop": "flow stop",
-    "flow-typed": "flow-typed install",
-    "add-page": "node -r babel-register-ts ./scripts/add-page.js",
-    "add-comp": "node -r babel-register-ts ./scripts/add-comp.js"
+    "flow-typed": "flow-typed install"
   },
   "dependencies": {
     "antd": "^3.10.8",
