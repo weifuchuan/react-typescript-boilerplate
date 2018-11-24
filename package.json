@@ -10,7 +10,8 @@
     "flow": "flow",
     "flow-status": "flow status",
     "flow-stop": "flow stop",
-    "flow-typed": "flow-typed install"
+    "flow-typed": "flow-typed install",
+    "update-dependencies": "ncu -a"
   },
   "dependencies": {
     "antd": "^3.10.8",
@@ -91,6 +92,7 @@
     "lowdb": "^1.0.0",
     "mini-css-extract-plugin": "^0.4.5",
     "node-sass": "^4.10.0",
+    "npm-check-updates": "^2.14.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
