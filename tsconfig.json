@@ -14,6 +14,7 @@
     "checkJs": false,
     "experimentalDecorators": true,
     "jsx": "react",
+    "importHelpers": true,
     "moduleResolution": "node", 
     "forceConsistentCasingInFileNames": true,
     "strict": true,
