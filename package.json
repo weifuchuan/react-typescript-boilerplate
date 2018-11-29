@@ -31,7 +31,6 @@
     "redux": "^4.0.1",
     "redux-saga": "^0.16.2",
     "rxjs": "^6.3.3",
-    "rxjs-compat": "^6.3.3",
     "tslib": "^1.9.3",
     "whatwg-fetch": "^3.0.0",
     "wolfy87-eventemitter": "^5.2.5"
