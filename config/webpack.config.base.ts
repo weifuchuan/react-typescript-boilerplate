@@ -240,7 +240,7 @@ function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
 		return new HtmlWebpackPlugin({
 			chunks: [ p.name ],
 			filename: `${p.filename ? p.filename : p.name}.html`, // 配置输出文件名和路径
-			template: resolveApp(`public/${p.template ? p.template : 'index'}.html`), // 配置文件模板
+			template: p.template ? resolveApp(`src/${p.name}/${p.template}`) : resolveApp('public/index.html'), // 配置文件模板
 			title: p.title ? p.title : p.name,
 			inject: true,
 			minify: {

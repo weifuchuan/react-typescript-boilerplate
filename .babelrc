@@ -14,8 +14,9 @@
         "@": "./src"
       }
     }],
-    "@babel/plugin-proposal-pipeline-operator",
-    
+    ["@babel/plugin-proposal-pipeline-operator", {
+      "proposal": "minimal"
+    }],
     ["import", {
       "libraryName": "antd",
       "libraryDirectory": "es",
