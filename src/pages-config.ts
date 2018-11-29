@@ -10,10 +10,7 @@ export default [
 		name: 'index'
 	},
 	{
-		name: 'admin',
+		name: 'todo-app-with-redux',
 		template: 'index.html'
-	},
-	{
-		name: 'about'
-	}
+	}, 
 ] as Page[];
