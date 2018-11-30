@@ -13,4 +13,7 @@ export default [
 		name: 'todo-app-with-redux',
 		template: 'index.html'
 	}, 
+	{
+		name:"with-redux-saga"
+	}
 ] as Page[];
