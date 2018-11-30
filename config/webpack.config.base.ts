@@ -9,6 +9,7 @@ import os from 'os';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import fs from 'fs-extra';
 import pagesConfig from '../src/pages-config';
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const HappyPack = require('happypack');
 
 const devMode: boolean = process.env.NODE_ENV !== 'production';
@@ -225,6 +226,7 @@ export default {
 			skipSuccessful: true
 		}),
 		...htmlWebpackPluginBuild(),
+		new HtmlWebpackInlineSourcePlugin(),
 		new MiniCssExtractPlugin({
 			filename: 'static/css/[name]-[hash:8].css',
 			chunkFilename: 'static/css/[id]-[hash:8].css'
@@ -244,6 +246,7 @@ function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
 			template: p.template ? resolveApp(`src/${p.name}/${p.template}`) : resolveApp('public/index.html'), // 配置文件模板
 			title: p.title ? p.title : p.name,
 			inject: true,
+			...p.inlineSource ? { inlineSource: p.inlineSource } : {},
 			minify: {
 				removeComments: true,
 				collapseWhitespace: true,
