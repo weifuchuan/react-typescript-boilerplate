@@ -15,7 +15,9 @@ webpack(config as any, (err, stats) => {
 	if (err || stats.hasErrors()) {
 		console.error(err);
 	}
-	console.log(stats.toString({
-		colors:true
-	}));
+	console.log(
+		stats.toString({
+			colors: true
+		})
+	);
 });
