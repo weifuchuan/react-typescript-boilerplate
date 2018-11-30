@@ -14,7 +14,7 @@ const HappyPack = require('happypack');
 const devMode: boolean = process.env.NODE_ENV !== 'production';
 
 const happyThreadPool: any = HappyPack.ThreadPool({
-	size: os.cpus().length * 2
+	size: os.cpus().length
 });
 
 const MiniCssExtractPluginLoader = {
@@ -226,8 +226,8 @@ export default {
 		}),
 		...htmlWebpackPluginBuild(),
 		new MiniCssExtractPlugin({
-			filename: 'static/css/[name]-[hash].css',
-			chunkFilename: 'static/css/[id]-[hash].css'
+			filename: 'static/css/[name]-[hash:8].css',
+			chunkFilename: 'static/css/[id]-[hash:8].css'
 		})
 	],
 
