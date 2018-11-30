@@ -68,8 +68,9 @@ const scssLoader = devMode
 
 function entryBuild(): webpack.Entry {
 	const entry: webpack.Entry = {};
-	for (let name of pagesConfig.map((p) => p.name)) {
-		const indexFile = resolveApp(`src/${name}/index.tsx`);
+	for (let page of pagesConfig) {
+		const { name } = page;
+		const indexFile = resolveApp(`src/${name}/${page.entry ? page.entry : 'index.tsx'}`);
 		if (fs.existsSync(indexFile)) {
 			entry[name] = [ require.resolve('./polyfills'), indexFile ];
 		} else {
