@@ -3,9 +3,9 @@ import './index.scss';
 import { observer, inject } from 'mobx-react';
 import { Store } from '@/index/store'; 
 import { observable } from 'mobx';
-import FullScreenLoading from '@/components/FullScreenLoading';
+import FullScreenLoading from '@/common/components/FullScreenLoading';
 
-const ShowWindowWidth = require('@/components/ShowWindowWidth').default;
+const ShowWindowWidth = require('@/common/components/ShowWindowWidth').default;
 
 interface Props {
 	store: Store;
