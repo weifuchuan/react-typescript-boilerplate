@@ -153,7 +153,7 @@ export default {
 				use: [ devMode ? 'style-loader' : MiniCssExtractPluginLoader, cssLoader, postcssLoader ]
 			},
 			{
-				test: [ /\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/ ],
+				test:  /\.((png)|(jpe?g)|(gif)|(bmp))$/,
 				loader: 'url-loader',
 				options: {
 					limit: 4096,

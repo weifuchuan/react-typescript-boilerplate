@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import config from '../config/webpack.config.prod.babel';
+import config from '../config/webpack.config.prod';
 import fs from 'fs-extra';
 import { resolveApp } from '../config/kit';
 

@@ -7,8 +7,8 @@ import pagesConfig from '../src/pages-config';
 const clearConsole = require('react-dev-utils/clearConsole');
 const { choosePort, createCompiler, prepareProxy, prepareUrls } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
-const config = require('../config/webpack.config.dev.babel');
-const createDevServerConfig = require('../config/webpackDevServer.config.babel');
+const config = require('../config/webpack.config.dev');
+const createDevServerConfig = require('../config/webpackDevServer.config');
 import { resolveApp } from '../config/kit';
 
 process.env.BABEL_ENV = 'development';
