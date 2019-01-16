@@ -1,7 +1,5 @@
-import EventEmitter from "wolfy87-eventemitter"
+import EventEmitter from "wolfy87-eventemitter";
 
-export class Store extends EventEmitter {
+export class Store extends EventEmitter {}
 
-}
-
-export default new Store(); 
+export default new Store();

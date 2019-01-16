@@ -1,20 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { completeTodo } from '@/todo-app-with-redux/redux/actions';
-import { ITodo } from '@/todo-app-with-redux/redux/types';
-import './Todo.less'
+import React, {
+  ComponentType,
+  FunctionComponent,
+  ReactElement,
+  ReactNode
+} from "react";
+import { connect } from "react-redux";
+import { completeTodo } from "@/todo-app-with-redux/redux/actions";
+import { IAction, ITodo } from "@/todo-app-with-redux/redux/types";
+import "./Todo.less";
 
-function Todo(props: { complete: typeof completeTodo; todo: ITodo; index: number }) {
-	return (
-		<div className={'todo'}>
-			<span>{props.todo.text}</span>
-			{props.todo.completed ? (
-				<span>completed</span>
-			) : (
-				<button onClick={() => props.complete(props.index)}>complete</button>
-			)}
-		</div>
-	);
+interface Props {
+  todo: ITodo;
+  index: number;
 }
 
-export default connect(null, { complete: completeTodo })(Todo);
+interface InjectedProps {
+  complete: typeof completeTodo;
+}
+
+const Todo: FunctionComponent<Props & InjectedProps> = props => {
+  return (
+    <div className={"todo"}>
+      <span>{props.todo.text}</span>
+      {props.todo.completed ? (
+        <span>completed</span>
+      ) : (
+        <button onClick={() => props.complete(props.index)}>complete</button>
+      )}
+    </div>
+  );
+};
+
+export default connect(
+  null,
+  { complete: completeTodo }
+)(Todo);

@@ -1,5 +1,5 @@
-// flow-typed signature: e4b2e410ed0e6d6b975017e4d5f2af7c
-// flow-typed version: f0bd032e5b/antd_v3.x.x/flow_>=v0.25.x
+// flow-typed signature: a6efe7b6ec542a64e6eb88f473afa37e
+// flow-typed version: 1ac34f93df/antd_v3.x.x/flow_>=v0.25.x
 
 declare module "antd" {
   import type { Node, Component } from "react";
@@ -127,6 +127,8 @@ declare module "antd" {
   declare export class DatePicker extends React$Component<{}> {}
 
   declare export class Dropdown extends React$Component<{}> {}
+
+  declare export class Drawer extends React$Component<{}> {}
 
   declare type ValidationRule = {
     enum?: string | string[],
@@ -348,6 +350,8 @@ declare module "antd" {
 
   declare export class Popconfirm extends React$Component<{}> {}
 
+  declare export class Progress extends React$Component<{}> {}
+
   declare export class Radio extends React$Component<{}> {
     static Group: typeof RadioGroup;
     static Button: typeof RadioButton;
@@ -425,7 +429,7 @@ declare module "antd" {
   declare export class Tag extends React$Component<{}> {}
 
   declare export type TooltipProps = {
-    title: string
+    title: string | React$Node | () => React$Node
   };
 
   declare export class Tooltip extends React$Component<TooltipProps> {}
@@ -435,4 +439,10 @@ declare module "antd" {
   }
 
   declare export class TreeSelectTreeNode extends React$Component<{}> {}
+
+  declare export class Upload extends React$Component<{}> {
+    static Dragger: typeof UploadDragger;
+  }
+
+  declare export class UploadDragger extends React$Component<{}> {}
 }

@@ -7,7 +7,7 @@ export interface Page {
 	inlineSource?: string; // 正则表达式，代表内联到html中的资源，如：'.(js|css)$'
 }
 
-export default [
+export default (([
 	{
 		name: 'index'
 	},
@@ -24,4 +24,4 @@ export default [
 		entry: 'index.ts',
 		inlineSource: '.(js|css)$'
 	}
-] as Page[];
+]) as Page[]);
