@@ -14,7 +14,7 @@ export type Filter = (cb: () => void, props: any) => void;
 
 export interface RouteProps {
 	path?: string;
-	component?: React.ComponentType;
+	component?: React.ComponentType<any>;
   loadComponent?: (cb: (comp: React.ComponentType<any>) => void) => void;
   cache?: boolean; 
 	index?: boolean;
