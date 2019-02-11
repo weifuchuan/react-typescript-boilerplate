@@ -6,12 +6,8 @@ import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
 import webpack from "webpack";
 import pagesConfig from "../src/pages-config";
 import { resolveApp } from "./kit";
-
-const { CheckerPlugin } = require("awesome-typescript-loader");
-const TerserPlugin = require("terser-webpack-plugin");
-const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
-
 const HtmlWebpackInlineSourcePlugin = require("html-webpack-inline-source-plugin");
+const log = require("single-line-log").stdout;
 
 const devMode: boolean = process.env.NODE_ENV !== "production";
 
@@ -68,10 +64,9 @@ function entryBuild(): webpack.Entry {
 }
 
 const babelLoader = {
-  loader: 'babel-loader',
+  loader: "babel-loader",
   options: {
-    cacheDirectory: true,
-    
+    cacheDirectory: true
   }
 };
 
@@ -79,33 +74,19 @@ export default {
   entry: entryBuild(),
   module: {
     // loaders
-    rules: [
+    rules: [ 
       {
-        test: /\.(js)|(jsx)/,
+        test: /\.(ts)|(tsx)|(js)|(jsx)/,
         exclude: /node_modules/,
         use: [
+          "thread-loader",
           babelLoader
-        ]
-      },
-      {
-        test: /\.(ts)|(tsx)/,
-        exclude: /node_modules/,
-        use: [
-          babelLoader,
           // {
-          //   loader: 'awesome-typescript-loader',
+          //   loader: "ts-loader",
           //   options: {
-          //     useCache: true,
-          //     reportFiles: [ 'src/**/*.{ts,tsx}' ],
-          //     cacheDirectory: '.awcache'
+          //     transpileOnly: devMode
           //   }
           // }
-          {
-            loader: "ts-loader",
-            options: {
-              transpileOnly: devMode
-            }
-          }
         ]
       },
       {
@@ -171,7 +152,6 @@ export default {
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(devMode)
     }),
-    // new CheckerPlugin(),
     ...(devMode
       ? [
           new ForkTsCheckerWebpackPlugin({
@@ -179,24 +159,24 @@ export default {
             watch: resolveApp("src")
           })
         ]
-      : []),
-    // new ForkTsCheckerNotifierWebpackPlugin({
-    //   excludeWarnings: true,
-    //   skipSuccessful: true,
-    //   alwaysNotify: false,
-    //   skipFirstNotification: true
-    // }),
+      : [
+          new webpack.ProgressPlugin(
+            (percent: any, message: any, ...args: any[]) => {
+              log(
+                `builded: 【 ${Math.floor(
+                  100 * percent
+                )} 】: ${message} ${args}`
+              );
+            }
+          )
+        ]),
     ...htmlWebpackPluginBuild(),
     new HtmlWebpackInlineSourcePlugin(),
     new MiniCssExtractPlugin({
       filename: "static/css/[name]-[hash:8].css",
       chunkFilename: "static/css/[id]-[hash:8].css"
     })
-  ],
-
-  optimization: {
-    minimizer: [new TerserPlugin()]
-  }
+  ]
 } as webpack.Configuration;
 
 function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
@@ -210,18 +190,20 @@ function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
       title: p.title ? p.title : p.name,
       inject: true,
       ...(p.inlineSource ? { inlineSource: p.inlineSource } : {}),
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true
-      }
+      minify: devMode
+        ? false
+        : {
+            removeComments: true,
+            collapseWhitespace: true,
+            removeRedundantAttributes: true,
+            useShortDoctype: true,
+            removeEmptyAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            keepClosingSlash: true,
+            minifyJS: true,
+            minifyCSS: true,
+            minifyURLs: true
+          }
     });
   });
 }

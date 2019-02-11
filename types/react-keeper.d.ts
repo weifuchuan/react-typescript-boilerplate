@@ -14,14 +14,14 @@ export type Filter = (cb: () => void, props: any) => void;
 
 export interface RouteProps {
 	path?: string;
-	component?: React.ComponentType<any>;
+	component?: React.ComponentType;
   loadComponent?: (cb: (comp: React.ComponentType<any>) => void) => void;
   cache?: boolean; 
 	index?: boolean;
 	miss?: boolean;
 	enterFilter?: Filter | Filter[];
 	leaveFilter?: Filter | Filter[];
-	children?: JSX.Element;
+	children?: JSX.Element[];
 }
 
 export class Route extends React.Component<RouteProps> {}
