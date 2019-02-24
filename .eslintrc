@@ -1,6 +1,6 @@
 {
   "extends": [
-    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:import/errors"
   ],
@@ -8,7 +8,8 @@
     "react",
     "react-hooks",
     "prettier",
-    "import"
+    "import",
+    "@typescript-eslint"
   ],
   "rules": {
     "prettier/prettier": [
@@ -325,7 +326,7 @@
       }
     ]
   },
-  "parser": "typescript-eslint-parser",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "jsx": true,
     "useJSXTextNode": true
