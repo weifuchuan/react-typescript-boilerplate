@@ -1,7 +1,6 @@
-// @flow
 import React, { useState, useEffect } from "react";
 
-export default function useWindowWidth(): number {
+export default function useWindowWidth() {
   const [width, setWidth] = useState(window.innerWidth);
   useEffect(() => {
     const doSetWidth = () => setWidth(window.innerWidth);

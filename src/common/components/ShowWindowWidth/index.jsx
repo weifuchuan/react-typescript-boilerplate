@@ -1,4 +1,3 @@
-// @flow
 import React from "react";
 import useWindowWidth from "@/common/hooks/useWindowWidth";
 

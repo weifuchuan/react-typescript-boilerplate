@@ -17,9 +17,6 @@ export default merge(baseConfig as any, {
     chunkFilename: "static/js/[id]-[chunkhash:8].chunk.js",
     publicPath: process.env.PUBLIC_PATH ? process.env.PUBLIC_PATH : "/"
   },
-  // optimization: {
-  //   minimize: false
-  // }
   optimization: {
     minimizer: [
       new TerserPlugin({

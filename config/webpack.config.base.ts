@@ -81,12 +81,6 @@ export default {
         use: [
           "thread-loader",
           babelLoader
-          // {
-          //   loader: "ts-loader",
-          //   options: {
-          //     transpileOnly: devMode
-          //   }
-          // }
         ]
       },
       {
@@ -144,7 +138,8 @@ export default {
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
 
-    plugins: [new TsconfigPathsPlugin({})]
+    // for ts-loader
+    // plugins: [new TsconfigPathsPlugin({})]
   },
 
   // plugins
@@ -164,8 +159,8 @@ export default {
             (percent: any, message: any, ...args: any[]) => {
               log(
                 `builded: 【 ${Math.floor(
-                  100 * percent
-                )} 】: ${message} ${args}`
+                  100 * percent 
+                )} % 】: ${message} ${args}`
               );
             }
           )
