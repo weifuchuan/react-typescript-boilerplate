@@ -12,13 +12,6 @@ export default (([
 		name: 'index'
 	},
 	{
-		name: 'todo-app-with-redux',
-		template: 'index.html'
-	},
-	{
-		name: 'with-redux-saga'
-	},
-	{
 		name: 'breakout',
 		template: 'index.html',
 		entry: 'index.ts',
