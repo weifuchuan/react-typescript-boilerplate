@@ -5,8 +5,7 @@
 require("react-app-polyfill/ie9")
 require("intersection-observer/intersection-observer.js")
 
-import _ResizeObserver from 'resize-observer-polyfill';
+import EventEmitter from "wolfy87-eventemitter";
 
-if (!window.ResizeObserver) {
-  window.ResizeObserver = _ResizeObserver;
-}
+window.EventEmitter = EventEmitter;
+window.bus = new EventEmitter(); 

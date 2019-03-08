@@ -115,22 +115,20 @@ export default {
         test: /\.((png)|(jpe?g)|(gif)|(bmp))$/,
         loader: "url-loader",
         options: {
-          limit: 4096,
+          limit: 16384,
           name: "static/media/[name].[hash:8].[ext]",
           fallback: "file-loader"
         }
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "static/media/[name].[hash:8].[ext]"
-            }
-          }
-        ]
-      }
+        loader: "url-loader",
+        options: {
+          limit: 16384,
+          name: "static/fonts/[name].[hash:8].[ext]",
+          fallback: "file-loader"
+        }
+      }, 
     ]
   },
 
