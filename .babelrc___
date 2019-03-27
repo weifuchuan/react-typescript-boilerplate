@@ -1,0 +1,25 @@
+{
+  "presets": [
+    ["react-app", {
+      "flow": false,
+      "typescript": true
+    }]
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["."],
+      "alias": {
+        "@": "./src"
+      }
+    }],
+    ["@babel/plugin-proposal-pipeline-operator", {
+      "proposal": "minimal"
+    }],
+    "babel-plugin-styled-components",
+    ["import", {
+      "libraryName": "antd",
+      "libraryDirectory": "es",
+      "style": "css"
+    }]
+  ]
+}

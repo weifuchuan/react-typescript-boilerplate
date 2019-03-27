@@ -28,7 +28,6 @@ export default class Home extends React.Component<Props> {
     return (
       <div className="HomeContainer">
         <H1>Index page</H1>
-
         <ShowWindowWidth />
         <FullScreenLoading loading={true} />
       </div>

@@ -1,15 +1,15 @@
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import fs from "fs-extra";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin";
-import webpack from "webpack";
-import pagesConfig from "../src/pages-config";
-import { resolveApp } from "./kit";
-const HtmlWebpackInlineSourcePlugin = require("html-webpack-inline-source-plugin");
-const log = require("single-line-log").stdout;
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import fs from 'fs-extra';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import webpack from 'webpack';
+import pagesConfig from '../src/pages-config';
+import { resolveApp } from './kit';
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const log = require('single-line-log').stdout;
 
-const devMode: boolean = process.env.NODE_ENV !== "production";
+const devMode: boolean = process.env.NODE_ENV !== 'production';
 
 const MiniCssExtractPluginLoader = {
   loader: MiniCssExtractPlugin.loader,
@@ -17,22 +17,22 @@ const MiniCssExtractPluginLoader = {
 };
 
 const postcssLoader = {
-  loader: "postcss-loader",
+  loader: 'postcss-loader',
   options: {
     sourceMap: devMode
   }
 };
 
 const cssLoader = {
-  loader: "css-loader",
+  loader: 'css-loader',
   options: {
     sourceMap: devMode,
-    localIdentName: "[local]__[path][name]--[hash:base64:5]"
+    localIdentName: '[local]__[path][name]--[hash:base64:5]'
   }
 };
 
 const lessLoader = {
-  loader: "less-loader",
+  loader: 'less-loader',
   options: {
     sourceMap: devMode
   }
@@ -40,22 +40,22 @@ const lessLoader = {
 
 const scssLoader = devMode
   ? {
-      loader: "sass-loader",
+      loader: 'sass-loader',
       options: {
         sourceMap: devMode
       }
     }
-  : "fast-sass-loader";
+  : 'fast-sass-loader';
 
 function entryBuild(): webpack.Entry {
   const entry: webpack.Entry = {};
   for (let page of pagesConfig) {
     const { name } = page;
     const indexFile = resolveApp(
-      `src/${name}/${page.entry ? page.entry : "index.tsx"}`
+      `src/${name}/${page.entry ? page.entry : 'index.tsx'}`
     );
     if (fs.existsSync(indexFile)) {
-      entry[name] = [require.resolve("./polyfills"), indexFile];
+      entry[name] = [ require.resolve('./polyfills'), indexFile ];
     } else {
       console.error(`${name} doesn't exsits! `);
     }
@@ -64,7 +64,7 @@ function entryBuild(): webpack.Entry {
 }
 
 const babelLoader = {
-  loader: "babel-loader",
+  loader: 'babel-loader',
   options: {
     cacheDirectory: true
   }
@@ -74,20 +74,17 @@ export default {
   entry: entryBuild(),
   module: {
     // loaders
-    rules: [ 
+    rules: [
       {
         test: /\.(ts)|(tsx)|(js)|(jsx)/,
         exclude: /node_modules/,
-        use: [
-          "thread-loader",
-          babelLoader
-        ]
+        use: [ 'thread-loader', babelLoader ]
       },
       {
         test: /\.(sa|sc)ss/,
         exclude: /node_modules/,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPluginLoader,
+          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
           cssLoader,
           postcssLoader,
           scssLoader
@@ -97,7 +94,7 @@ export default {
         test: /\.less/,
         exclude: /node_modules/,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPluginLoader,
+          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
           cssLoader,
           postcssLoader,
           lessLoader
@@ -106,38 +103,38 @@ export default {
       {
         test: /\.css$/,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPluginLoader,
+          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
           cssLoader,
           postcssLoader
         ]
       },
       {
         test: /\.((png)|(jpe?g)|(gif)|(bmp))$/,
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
           limit: 16384,
-          name: "static/media/[name].[hash:8].[ext]",
-          fallback: "file-loader"
+          name: 'static/media/[name].[hash:8].[ext]',
+          fallback: 'file-loader'
         }
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
           limit: 16384,
-          name: "static/fonts/[name].[hash:8].[ext]",
-          fallback: "file-loader"
+          name: 'static/fonts/[name].[hash:8].[ext]',
+          fallback: 'file-loader'
         }
-      }, 
+      }
     ]
   },
 
   // how to resolve modules
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
-
-    // for ts-loader
-    // plugins: [new TsconfigPathsPlugin({})]
+    extensions: [ '.js', '.jsx', '.ts', '.tsx', '.json' ],
+    alias: {
+      'react-native': 'react-native-web'
+    }
   },
 
   // plugins
@@ -145,19 +142,19 @@ export default {
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(devMode)
     }),
+    new ForkTsCheckerWebpackPlugin({
+      checkSyntacticErrors: true,
+      watch: resolveApp('src'),
+      async: devMode
+    }),
     ...(devMode
-      ? [
-          new ForkTsCheckerWebpackPlugin({
-            checkSyntacticErrors: true,
-            watch: resolveApp("src")
-          })
-        ]
+      ? []
       : [
           new webpack.ProgressPlugin(
             (percent: any, message: any, ...args: any[]) => {
               log(
                 `builded: 【 ${Math.floor(
-                  100 * percent 
+                  100 * percent
                 )} % 】: ${message} ${args}`
               );
             }
@@ -166,23 +163,33 @@ export default {
     ...htmlWebpackPluginBuild(),
     new HtmlWebpackInlineSourcePlugin(),
     new MiniCssExtractPlugin({
-      filename: "static/css/[name]-[hash:8].css",
-      chunkFilename: "static/css/[id]-[hash:8].css"
+      filename: 'static/css/[name]-[hash:8].css',
+      chunkFilename: 'static/css/[id]-[hash:8].css'
     })
-  ]
+  ],
+  node: {
+    module: 'empty',
+    dgram: 'empty',
+    dns: 'mock',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
+  },
+  performance: false
 } as webpack.Configuration;
 
 function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
-  return pagesConfig.map(p => {
+  return pagesConfig.map((p) => {
     return new HtmlWebpackPlugin({
-      chunks: [p.name],
+      chunks: [ p.name ],
       filename: `${p.filename ? p.filename : p.name}.html`, // 配置输出文件名和路径
       template: p.template
         ? resolveApp(`src/${p.name}/${p.template}`)
-        : resolveApp("public/index.html"), // 配置文件模板
+        : resolveApp('public/index.html'), // 配置文件模板
       title: p.title ? p.title : p.name,
       inject: true,
-      ...(p.inlineSource ? { inlineSource: p.inlineSource } : {}),
+      ...p.inlineSource ? { inlineSource: p.inlineSource } : {},
       minify: devMode
         ? false
         : {

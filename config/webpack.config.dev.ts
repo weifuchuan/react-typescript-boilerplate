@@ -10,9 +10,9 @@ for (let name in entry) {
 	entry[name].unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
 }
 
-module.exports = merge.smart(baseConfig as any, {
+export default merge.smart(baseConfig as any, {
 	mode: 'development',
-	devtool: 'eval-source-map',
+	devtool: 'eval-source-map', 
 
 	output: {
 		path: resolveApp('dist/'),
@@ -32,5 +32,9 @@ module.exports = merge.smart(baseConfig as any, {
 
 	performance: {
 		hints: false
+	},
+
+	optimization:{
+		minimize:false
 	}
 });

@@ -3,7 +3,7 @@
     ["@babel/preset-env", {
       "useBuiltIns": "usage"
     }],
-    "@babel/preset-react", 
+    "@babel/preset-react",
     "@babel/preset-typescript"
   ],
   "plugins": [
@@ -25,10 +25,15 @@
       "proposal": "minimal"
     }],
     ["import", {
-      "libraryName": "antd",
-      "libraryDirectory": "es",
+      "libraryName": "antd-mobile",
       "style": "css"
     }],
+    ["import", {
+      "libraryName": "@material-ui/core",
+      "libraryDirectory": "es",
+      "style": false,
+      "camel2DashComponentName": false
+    }, "import-material"],
     "babel-plugin-styled-components"
   ]
 }

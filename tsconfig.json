@@ -27,6 +27,11 @@
     "skipLibCheck": true,
     "locale": "zh-CN"
   },
+  "include": [
+    "src",
+    "scripts",
+    "config"
+  ],
   "exclude": [
     "node_modules",
     "build",
