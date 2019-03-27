@@ -1,8 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Store } from '@/index/store';
-import { observable } from 'mobx';
-import FullScreenLoading from '@/common/components/FullScreenLoading';
+import { observable } from 'mobx'; 
 import './index.scss';
 import styled from 'styled-components';
 import colors from '@/common/styles/colors';
@@ -28,8 +27,7 @@ export default class Home extends React.Component<Props> {
     return (
       <div className="HomeContainer">
         <H1>Index page</H1>
-        <ShowWindowWidth />
-        <FullScreenLoading loading={true} />
+        <ShowWindowWidth /> 
       </div>
     );
   }

@@ -1,4 +1,4 @@
-{
+module.exports = {
   "presets": [
     ["@babel/preset-env", {
       "useBuiltIns": "usage"
@@ -24,10 +24,14 @@
     ["@babel/plugin-proposal-pipeline-operator", {
       "proposal": "minimal"
     }],
-    ["import", {
-      "libraryName": "antd-mobile",
-      "style": "css"
-    }],
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": "css"
+      }
+    ],
     ["import", {
       "libraryName": "@material-ui/core",
       "libraryDirectory": "es",
