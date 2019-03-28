@@ -43,11 +43,6 @@ export default merge(baseConfig as any, {
         cache: true,
         sourceMap: false
       })
-    ],
-    splitChunks: {
-      chunks: 'all',
-      name: false
-    },
-    runtimeChunk: true,
+    ], 
   }
 });

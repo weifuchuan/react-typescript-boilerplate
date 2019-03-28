@@ -189,7 +189,7 @@ function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
         : resolveApp('public/index.html'), // 配置文件模板
       title: p.title ? p.title : p.name,
       inject: true,
-      ...p.inlineSource ? { inlineSource: p.inlineSource } : {},
+      ...p.inlineSource && !devMode ? { inlineSource: p.inlineSource } : {},
       minify: devMode
         ? false
         : {
