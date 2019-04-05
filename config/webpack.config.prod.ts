@@ -13,8 +13,8 @@ export default merge(baseConfig as any, {
 
   output: {
     path: resolveApp('build'),
-    filename: 'static/js/[name]-[chunkhash:8].bundle.js',
-    chunkFilename: 'static/js/[id]-[chunkhash:8].chunk.js',
+    filename: 'static/js/[name].[chunkhash:8].bundle.js',
+    chunkFilename: 'static/js/[id].[chunkhash:8].chunk.js',
     publicPath: process.env.PUBLIC_PATH ? process.env.PUBLIC_PATH : '/'
   },
   optimization: {

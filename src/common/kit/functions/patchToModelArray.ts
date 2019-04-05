@@ -1,18 +1,21 @@
-export default function patchToModelArray<T extends { id: number }>(
+export default function patchToModelArray<T>(
   from: T[],
-  to: T[]
+  to: T[],
+  keyExtractor: (v: T) => any = (v: T) => (v as any).id
 ) {
-  const ids: any = {};
-  for (let item of from) {
-    ids[item.id] = item;
+  const idToItem = new Map();
+  for (let i = 0; i < from.length; i++) {
+    const item = from[i];
+    idToItem.set(keyExtractor(item), item);
   }
-  for (let item of to) {
-    if (ids[item.id]) {
-      Object.assign(item, ids[item.id]);
-      delete ids[item.id];
+  for (let i = 0; i < to.length; i++) {
+    const item = to[i];
+    if (idToItem.has(keyExtractor(item))) {
+      to[i] = idToItem.get(keyExtractor(item));
+      idToItem.delete(keyExtractor(item));
     }
   }
-  for (let key in ids) {
-    to.push(ids[key]);
+  for (let id of idToItem.keys()) {
+    to.push(idToItem.get(id));
   }
 }

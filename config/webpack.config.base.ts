@@ -38,15 +38,6 @@ const lessLoader = {
   }
 };
 
-const scssLoader = devMode
-  ? {
-      loader: 'sass-loader',
-      options: {
-        sourceMap: devMode
-      }
-    }
-  : 'fast-sass-loader';
-
 function entryBuild(): webpack.Entry {
   const entry: webpack.Entry = {};
   for (let page of pagesConfig) {
@@ -79,16 +70,6 @@ export default {
         test: /\.(ts)|(tsx)|(js)|(jsx)/,
         exclude: /node_modules/,
         use: [ 'thread-loader', babelLoader ]
-      },
-      {
-        test: /\.(sa|sc)ss/,
-        exclude: /node_modules/,
-        use: [
-          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
-          cssLoader,
-          postcssLoader,
-          scssLoader
-        ]
       },
       {
         test: /\.less/,
@@ -134,7 +115,8 @@ export default {
     extensions: [ '.js', '.jsx', '.ts', '.tsx', '.json' ],
     alias: {
       'react-native': 'react-native-web'
-    }
+    },
+    plugins: [ new TsconfigPathsPlugin() ]
   },
 
   // plugins
@@ -163,8 +145,8 @@ export default {
     ...htmlWebpackPluginBuild(),
     new HtmlWebpackInlineSourcePlugin(),
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name]-[hash:8].css',
-      chunkFilename: 'static/css/[id]-[hash:8].css'
+      filename: 'static/css/[name].[hash:8].css',
+      chunkFilename: 'static/css/[id].[hash:8].css'
     })
   ],
   node: {
@@ -175,8 +157,7 @@ export default {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty'
-  },
-  performance: false
+  }
 } as webpack.Configuration;
 
 function htmlWebpackPluginBuild(): HtmlWebpackPlugin[] {
