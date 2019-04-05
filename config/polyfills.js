@@ -8,5 +8,4 @@ require("intersection-observer/intersection-observer.js")
 
 import EventEmitter from "wolfy87-eventemitter";
 
-window.EventEmitter = EventEmitter;
-window.bus = new EventEmitter();
+window.EventEmitter = EventEmitter; 
