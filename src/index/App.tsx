@@ -1,6 +1,6 @@
 import * as React from "react";
 import { HashRouter, Route } from "react-keeper";
-import "./App.scss";
+import "./App.less";
 
 const Router = HashRouter;
 

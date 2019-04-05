@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Store } from '@/index/store';
 import { observable } from 'mobx'; 
-import './index.scss';
+import './index.less';
 import styled from 'styled-components';
 import colors from '@/common/styles/colors';
 
