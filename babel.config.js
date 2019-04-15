@@ -28,14 +28,15 @@ module.exports = {
         "libraryName": "antd",
         "libraryDirectory": "es",
         "style": "css"
-      }
+      },
+      "import-antd"
     ],
-    // ["import", {
-    //   "libraryName": "@material-ui/core",
-    //   "libraryDirectory": "es",
-    //   "style": false,
-    //   "camel2DashComponentName": false
-    // }, "import-material"],
+    ["import", {
+      "libraryName": "@material-ui/core",
+      "libraryDirectory": "es",
+      "style": false,
+      "camel2DashComponentName": false
+    }, "import-material"],
     "babel-plugin-styled-components"
   ]
 }

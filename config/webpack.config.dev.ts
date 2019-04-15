@@ -7,34 +7,35 @@ const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeM
 
 const entry: any = baseConfig.entry;
 for (let name in entry) {
-	entry[name].unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
+  entry[name].unshift(require.resolve('react-dev-utils/webpackHotDevClient'));
 }
 
 export default merge.smart(baseConfig as any, {
-	mode: 'development',
-	devtool: 'eval-source-map', 
+  mode: 'development',
+  devtool: 'cheap-module-source-map',
 
-	output: {
-		path: resolveApp('dist/'),
-		pathinfo: true,
-		filename: 'static/js/[name]/bundle.js',
-		chunkFilename: 'static/js/[name].chunk.js',
-		publicPath: '/',
+  output: {
+    path: resolveApp('dist/'),
+    pathinfo: true,
+    filename: 'static/js/[name]/bundle.js',
+    chunkFilename: 'static/js/[name].chunk.js',
+    publicPath: '/',
 
-		devtoolModuleFilenameTemplate: (info) => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
-	},
+    devtoolModuleFilenameTemplate: (info) =>
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
+  },
 
-	plugins: [
-		new webpack.NamedModulesPlugin(),
-		new webpack.HotModuleReplacementPlugin(),
-		new WatchMissingNodeModulesPlugin(resolveApp('node_modules'))
-	],
+  plugins: [
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new WatchMissingNodeModulesPlugin(resolveApp('node_modules'))
+  ],
 
-	performance: {
-		hints: false
-	},
+  performance: {
+    hints: false
+  },
 
-	optimization:{
-		minimize:false
-	}
+  optimization: {
+    minimize: false
+  }
 });

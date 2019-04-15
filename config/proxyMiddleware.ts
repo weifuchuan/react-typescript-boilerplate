@@ -7,7 +7,6 @@ export default undefined;
 //   changeOrigin: true,
 //   ws: true,
 //   pathRewrite: function (path, req) {
-
 //     return path.substring(4); // trim left /api
 //   }
 // });

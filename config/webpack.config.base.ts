@@ -1,5 +1,6 @@
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import fs from 'fs-extra';
+import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
@@ -63,13 +64,19 @@ const babelLoader = {
 
 export default {
   entry: entryBuild(),
-  module: {
-    // loaders
+  module: { 
     rules: [
       {
         test: /\.(ts)|(tsx)|(js)|(jsx)/,
         exclude: /node_modules/,
         use: [ 'thread-loader', babelLoader ]
+      },
+      {
+        loader:'webpack-ant-icon-loader',
+        enforce: 'pre',
+        include:[
+          path.resolve('node_modules/@ant-design/icons/lib/dist')
+        ]
       },
       {
         test: /\.less/,
@@ -130,7 +137,7 @@ export default {
       async: devMode
     }),
     ...(devMode
-      ? []
+      ? [ ]
       : [
           new webpack.ProgressPlugin(
             (percent: any, message: any, ...args: any[]) => {
@@ -140,14 +147,14 @@ export default {
                 )} % 】: ${message} ${args}`
               );
             }
-          )
+          ),
+          new MiniCssExtractPlugin({
+            filename: 'static/css/[name].[hash:8].css',
+            chunkFilename: 'static/css/[id].[hash:8].css'
+          })
         ]),
     ...htmlWebpackPluginBuild(),
-    new HtmlWebpackInlineSourcePlugin(),
-    new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[hash:8].css',
-      chunkFilename: 'static/css/[id].[hash:8].css'
-    })
+    new HtmlWebpackInlineSourcePlugin()
   ],
   node: {
     module: 'empty',
