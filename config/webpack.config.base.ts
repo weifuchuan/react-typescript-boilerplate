@@ -9,6 +9,8 @@ import pagesConfig from '../src/pages-config';
 import { resolveApp } from './kit';
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const log = require('single-line-log').stdout;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 const devMode: boolean = process.env.NODE_ENV !== 'production';
 
@@ -151,7 +153,8 @@ export default {
           new MiniCssExtractPlugin({
             filename: 'static/css/[name].[hash:8].css',
             chunkFilename: 'static/css/[id].[hash:8].css'
-          })
+          }),
+          new BundleAnalyzerPlugin()
         ]),
     ...htmlWebpackPluginBuild(),
     new HtmlWebpackInlineSourcePlugin()

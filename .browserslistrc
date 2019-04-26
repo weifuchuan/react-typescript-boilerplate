@@ -1,1 +1,6 @@
-defaults
+Edge  12
+Firefox 18
+Chrome  49
+Safari 10
+Android > 4.4.4
+not ie <= 11
