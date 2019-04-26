@@ -1,6 +1,6 @@
-import * as React from 'react';
-import './index.scss';
+import * as React from 'react'; 
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 
 export default class Modal extends React.Component<{
   width: string;
@@ -26,8 +26,7 @@ export default class Modal extends React.Component<{
 
   render() {
     return (
-      <div
-        className={'fc-modal'}
+      <_Modal 
         style={{ display: this.state.display }}
         onClick={(e) => {
           e.preventDefault();
@@ -66,7 +65,7 @@ export default class Modal extends React.Component<{
           </div>
           {this.props.children}
         </div>
-      </div>
+      </_Modal>
     );
   }
 
@@ -99,3 +98,36 @@ export default class Modal extends React.Component<{
     };
   }
 }
+
+const _Modal = styled.div`
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000000;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .shadow {
+    -moz-box-shadow: 0px 0px 20px #333333;
+    -webkit-box-shadow: 0px 0px 20px #333333;
+    box-shadow: 0px 0px 20px #333333;
+  }
+
+  .close-x {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    color: #aaaaaa;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000000;
+  }
+`

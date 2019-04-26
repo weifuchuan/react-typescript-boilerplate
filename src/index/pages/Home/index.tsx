@@ -1,34 +1,10 @@
-import React from 'react';
-import { observer, inject } from 'mobx-react';
-import { Store } from '@/index/store';
-import { observable } from 'mobx'; 
-import './index.less';
-import styled from 'styled-components';
-import colors from '@/common/styles/colors';
+import React, { FunctionComponent } from 'react';
+import { observer } from 'mobx-react-lite';
 
-const ShowWindowWidth = require('@/common/components/ShowWindowWidth').default;
+interface Props {}
 
-interface Props {
-  store: Store;
-}
+const Home: FunctionComponent<Props> = observer(() => {
+  return <div>Home</div>;
+});
 
-const H1 = styled.h1`
-  color: #fff;
-  background-color: ${colors.SkyBlue};
-  font-weight: bold;
-`;
-
-@inject('store')
-@observer
-export default class Home extends React.Component<Props> {
-  @observable loading = false;
-
-  render() {
-    return (
-      <div className="HomeContainer">
-        <H1>Index page</H1>
-        <ShowWindowWidth /> 
-      </div>
-    );
-  }
-}
+export default Home;

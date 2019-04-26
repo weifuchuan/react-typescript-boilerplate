@@ -1,6 +1,7 @@
-import * as React from "react";
-import { HashRouter, Route } from "react-keeper";
-import "./App.less";
+import * as React from 'react';
+import { HashRouter  } from 'react-keeper'; 
+import LoadingRoute from '@/common/components/LoadingRoute';
+import styled from 'styled-components';
 
 const Router = HashRouter;
 
@@ -8,14 +9,9 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div className={"container"}>
-          <Route
-            path={"/>"}
-            loadComponent={cb =>
-              import("@/index/pages/Home").then(C => cb(C.default))
-            }
-          />
-        </div>
+        <_App>
+          <LoadingRoute path="/>" imported={() => import('./pages/Home')} />
+        </_App>
       </Router>
     );
   }
@@ -23,4 +19,5 @@ class App extends React.Component {
 
 export default App;
 
-
+const _App = styled.div`
+`
