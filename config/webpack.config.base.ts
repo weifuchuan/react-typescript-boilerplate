@@ -133,11 +133,11 @@ export default {
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(devMode)
     }),
-    new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
-      watch: resolveApp('src'),
-      async: devMode
-    }),
+    // new ForkTsCheckerWebpackPlugin({
+    //   checkSyntacticErrors: true,
+    //   watch: resolveApp('src'),
+    //   async: devMode
+    // }),
     ...(devMode
       ? [ ]
       : [
