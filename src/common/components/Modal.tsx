@@ -1,10 +1,10 @@
-import * as React from 'react'; 
+import * as React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 export default class Modal extends React.Component<{
   width: string;
-  height?: string;
+  zIndex?: number;
 }> {
   state = {
     display: 'none'
@@ -26,75 +26,89 @@ export default class Modal extends React.Component<{
 
   render() {
     return (
-      <_Modal 
-        style={{ display: this.state.display }}
+      <_Modal
+        style={{
+          display: this.state.display,
+          ...this.props.zIndex ? { zIndex: this.props.zIndex } : {}
+        }}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           this.hide();
         }}
       >
-        <div
-          className="shadow"
-          style={{
-            width: this.props.width,
-            height: 'fit-content',
-            backgroundColor: '#ffffff',
-            // borderRadius: '0.5em',
-            position: 'relative',
-            padding: '1em',
-            marginTop: window.innerHeight * 0.1,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginBottom: window.innerHeight * 0.1
-          }}
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-          }}
-        >
+        <div style={{ width: '100%' }}>
           <div
-            className={'close-x'}
+            className="shadow"
+            style={{
+              width: this.props.width,
+              height: 'fit-content',
+              backgroundColor: '#ffffff',
+              // borderRadius: '0.5em',
+              position: 'relative',
+              padding: '1em',
+              marginTop: window.innerHeight * 0.1,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              marginBottom: window.innerHeight * 0.1
+            }}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              this.hide();
             }}
           >
-            <a>×</a>
+            <div
+              className={'close-x'}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                this.hide();
+              }}
+            >
+              <a>×</a>
+            </div>
+            {this.props.children}
           </div>
-          {this.props.children}
         </div>
       </_Modal>
     );
   }
 
+  private static nextId = 0;
+
   static show(
     elem: React.ReactNode,
     width: string,
-    height: string = ''
+    zIndex?: number
   ): () => void {
+    Modal.nextId++;
     const d = window.document;
     let div: HTMLDivElement | null = d.getElementById(
-      'fc-modal-duwnyhc7837rnnne47yt4e7v578geidc4785'
+      'fc-modal-yndhsjfcuh' + Modal.nextId
     ) as HTMLDivElement | null;
     if (!div) {
       div = d.createElement('div');
-      div.id = 'fc-modal-duwnyhc7837rnnne47yt4e7v578geidc4785';
+      div.id = 'fc-modal-yndhsjfcuh' + Modal.nextId;
       d.getElementsByTagName('body')[0].appendChild(div);
     }
     const self = this as any;
-    const modalElem = (
-      <Modal width={width} height={height} ref={(r) => (self.modal = r)}>
+    ReactDOM.render(
+      <Modal width={width} ref={(r) => (self.modal = r)} zIndex={zIndex}>
         {elem}
-      </Modal>
+      </Modal>,
+      div,
+      () => {
+        self.modal.show();
+      }
     );
-    ReactDOM.render(modalElem, div, () => {
-      self.modal.show();
-    });
     return () => {
-      self.modal.hide();
-      ReactDOM.unmountComponentAtNode(self.modal);
+      self.modal && self.modal.hide();
+      setTimeout(() => {
+        ReactDOM.unmountComponentAtNode(div!);
+        setTimeout(() => {
+          div!.parentElement!.removeChild(div!);
+        }, 300);
+      }, 300);
     };
   }
 }
@@ -108,7 +122,7 @@ const _Modal = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000000;
+  z-index: 1;
   background-color: rgba(0, 0, 0, 0.5);
 
   .shadow {
@@ -130,4 +144,4 @@ const _Modal = styled.div`
     align-items: center;
     z-index: 100000000;
   }
-`
+`;

@@ -1,10 +1,12 @@
-
-export default function selectFiles(): Promise<File[]> {
+export default function selectFiles(
+  inputPropsSetter?: (input: HTMLInputElement) => void
+): Promise<File[]> {
   return new Promise((resolve, reject) => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.multiple = true;
-    input.style.display = "none";
+    const input = document.createElement('input');
+    input.multiple = false;
+    inputPropsSetter && inputPropsSetter(input);
+    input.type = 'file';
+    input.style.display = 'none';
     input.onchange = () => {
       if (input.files) {
         const files: File[] = [];
@@ -16,10 +18,7 @@ export default function selectFiles(): Promise<File[]> {
         reject();
       }
     };
-    document
-      .getElementsByTagName("html")!
-      .item(0)!
-      .appendChild(input);
+    document.getElementsByTagName('html')!.item(0)!.appendChild(input);
     input.click();
   });
 }
