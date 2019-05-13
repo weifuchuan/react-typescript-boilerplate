@@ -12,11 +12,11 @@ for (let name in entry) {
 
 export default merge.smart(baseConfig as any, {
   mode: 'development',
-  devtool: 'cheap-module-source-map',
+  devtool: 'cheap-module-eval-source-map',
 
   output: {
     path: resolveApp('dist/'),
-    pathinfo: true,
+    pathinfo: false,
     filename: 'static/js/[name]/bundle.js',
     chunkFilename: 'static/js/[name].chunk.js',
     publicPath: '/',

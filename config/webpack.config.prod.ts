@@ -15,7 +15,8 @@ export default merge(baseConfig as any, {
     path: resolveApp('build'),
     filename: 'static/js/[name].[chunkhash:8].bundle.js',
     chunkFilename: 'static/js/[id].[chunkhash:8].chunk.js',
-    publicPath: process.env.PUBLIC_PATH ? process.env.PUBLIC_PATH : '/'
+    publicPath: process.env.PUBLIC_PATH ? process.env.PUBLIC_PATH : '/',
+    pathinfo: false
   },
   optimization: {
     minimizer: [
@@ -44,5 +45,26 @@ export default merge(baseConfig as any, {
         sourceMap: false
       })
     ], 
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      automaticNameDelimiter: '~',
+      name: true,
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
   }
 });

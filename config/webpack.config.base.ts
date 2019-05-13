@@ -1,6 +1,6 @@
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import fs from 'fs-extra';
-import path from 'path'
+import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
@@ -9,15 +9,15 @@ import pagesConfig from '../src/pages-config';
 import { resolveApp } from './kit';
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 const log = require('single-line-log').stdout;
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 const devMode: boolean = process.env.NODE_ENV !== 'production';
 
-const MiniCssExtractPluginLoader = {
-  loader: MiniCssExtractPlugin.loader,
-  options: {}
-};
+// const MiniCssExtractPluginLoader = {
+//   loader: MiniCssExtractPlugin.loader,
+//   options: {}
+// };
 
 const postcssLoader = {
   loader: 'postcss-loader',
@@ -57,34 +57,40 @@ function entryBuild(): webpack.Entry {
   return entry;
 }
 
-const babelLoader = {
-  loader: 'babel-loader',
-  options: {
-    cacheDirectory: true
-  }
-};
-
 export default {
   entry: entryBuild(),
-  module: { 
+  module: {
     rules: [
       {
-        test: /\.(ts)|(tsx)|(js)|(jsx)/,
+        test: /\.(js)|(jsx)/,
         exclude: /node_modules/,
-        use: [ 'thread-loader', babelLoader ]
+        use: [ 'cache-loader', 'babel-loader' ]
       },
       {
-        loader:'webpack-ant-icon-loader',
+        test: /\.tsx?$/,
+        use: [
+          'cache-loader',
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              experimentalWatchApi: true
+            }
+          }
+        ],
+        exclude: /node_modules/
+      },
+      {
+        loader: 'webpack-ant-icon-loader',
         enforce: 'pre',
-        include:[
-          path.resolve('node_modules/@ant-design/icons/lib/dist')
-        ]
+        include: [ path.resolve('node_modules/@ant-design/icons/lib/dist') ]
       },
       {
         test: /\.less/,
         exclude: /node_modules/,
         use: [
-          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+          // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+          'style-loader',
           cssLoader,
           postcssLoader,
           lessLoader
@@ -93,7 +99,8 @@ export default {
       {
         test: /\.css$/,
         use: [
-          devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+          // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
+          'style-loader',
           cssLoader,
           postcssLoader
         ]
@@ -139,7 +146,7 @@ export default {
     //   async: devMode
     // }),
     ...(devMode
-      ? [ ]
+      ? []
       : [
           new webpack.ProgressPlugin(
             (percent: any, message: any, ...args: any[]) => {
@@ -150,15 +157,15 @@ export default {
               );
             }
           ),
-          new MiniCssExtractPlugin({
-            filename: 'static/css/[name].[hash:8].css',
-            chunkFilename: 'static/css/[id].[hash:8].css'
-          }),
+          // new MiniCssExtractPlugin({
+          //   filename: 'static/css/[name].[hash:8].css',
+          //   chunkFilename: 'static/css/[id].[hash:8].css'
+          // }),
           new BundleAnalyzerPlugin()
         ]),
     ...htmlWebpackPluginBuild(),
-    new HtmlWebpackInlineSourcePlugin()
-  ],
+    devMode ? null : new HtmlWebpackInlineSourcePlugin()
+  ].filter((x) => !!x),
   node: {
     module: 'empty',
     dgram: 'empty',
