@@ -70,6 +70,7 @@ export default {
         test: /\.tsx?$/,
         use: [
           'cache-loader',
+          'babel-loader',
           {
             loader: 'ts-loader',
             options: {

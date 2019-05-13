@@ -52,6 +52,15 @@ module.exports = {
       },
       'import-material'
     ],
+    [
+      'import',
+      {
+        libraryName: 'lodash',
+        libraryDirectory: '',
+        camel2DashComponentName: false
+      },
+      'import-lodash'
+    ],
     'babel-plugin-styled-components'
   ]
 };
