@@ -141,6 +141,7 @@ export default {
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(devMode)
     }),
+    new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn/),
     // new ForkTsCheckerWebpackPlugin({
     //   checkSyntacticErrors: true,
     //   watch: resolveApp('src'),
