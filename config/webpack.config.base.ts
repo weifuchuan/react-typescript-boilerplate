@@ -19,18 +19,17 @@ const devMode: boolean = process.env.NODE_ENV !== 'production';
 //   options: {}
 // };
 
-const postcssLoader = {
-  loader: 'postcss-loader',
-  options: {
-    sourceMap: devMode
-  }
-};
+// const postcssLoader = {
+//   loader: 'postcss-loader',
+//   options: {
+//     sourceMap: devMode
+//   }
+// };
 
 const cssLoader = {
   loader: 'css-loader',
   options: {
-    sourceMap: devMode,
-    localIdentName: '[local]__[path][name]--[hash:base64:5]'
+    sourceMap: devMode, 
   }
 };
 
@@ -93,7 +92,7 @@ export default {
           // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
           'style-loader',
           cssLoader,
-          postcssLoader,
+          'postcss-loader',
           lessLoader
         ]
       },
@@ -103,7 +102,7 @@ export default {
           // devMode ? 'style-loader' : MiniCssExtractPluginLoader,
           'style-loader',
           cssLoader,
-          postcssLoader
+          'postcss-loader'
         ]
       },
       {
